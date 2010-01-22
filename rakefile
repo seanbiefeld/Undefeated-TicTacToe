@@ -1,45 +1,37 @@
 ################################
 ###### Build with Albacore #####
 ################################
+task :default => ['albacore:build']
+
 namespace :albacore do
+	require 'albacore'
+
 	desc "Run a complete build "
-	task :build => ['albacore:assemblyinfo', 'albacore:msbuild']
-	task :devBuild => ['albacore:assemblyinfo', 'albacore:msbuild', 'albacore:ncoverconsole']
-	
+	task :build => ['albacore:assemblyinfo', 'albacore:msbuild', 'albacore:mspec']
 	desc "Run a build using the MSBuildTask"
-	Rake::MSBuildTask.new(:msbuild) do |msb|
-		msb.properties :configuration => build_mode
-		msb.targets [:Clean, :Build]
+	
+	msbuild :msbuild do |msb|
+		msb.properties :configuration => :debug
+		msb.targets [:clean, :build]
 		msb.solution = "src/UndefeatedTicTacToe.sln"
 	end
 	
 	desc "Run a sample assembly info generator"
-	Rake::AssemblyInfoTask.new(:assemblyinfo) do |asm|
-		asm.version = getVersion
-		asm.company_name = Sean Biefeld"
+	assemblyinfo do |asm|
+		asm.version = "0.0.1"
+		asm.company_name = "Sean Biefeld"
 		asm.product_name = "Undefeated TicTacToe"
 		asm.title = "Undefeated TicTacToe"
-		asm.description = "An unbeatable tic tac toe game"
-		asm.copyright = "sean biefeld"
+		asm.description = "A tic tac toe game that can not be won"
+		asm.copyright = "copyright Sean Biefeld"
 		
 		asm.output_file = "src/CommonAssemblyInfo.cs"
 	end
 	
-	desc "Run the NCover Console code coverage"
-	Rake::NCoverConsoleTask.new(:ncoverconsole) do |ncc|
-		@xml_coverage = "CodeCoverage/test-coverage.xml"
-		File.delete(@xml_coverage) if File.exist?(@xml_coverage)
-		
-		ncc.log_level = :verbose
-		ncc.path_to_command = "lib/ncover/NCover.Console.exe"
-		ncc.output = {:xml => @xml_coverage, :html => "CodeCoverage/html"}
-		ncc.working_directory = "CodeCoverage"
-		ncc.cover_assemblies << "bin\\Debug\\UndefeatedTicTacToe.dll"
-		
-		mspec = MSpecTestRunner.new("lib/Machine.Specifications/Release/mspec.exe")
-		mspec.assemblies << "#{bin\\Debug\\Specs\\UndefeatedTicTacToe.Specs.dll"
-		mspec.html_output = "#specs\\#{project}.Unit.Specifications.html"
-		
-		ncc.testrunner = mspec
+	desc "mspec test runner"
+	mspec do |mspec|
+		mspec.path_to_command = "lib/Machine.Specifications/Release/mspec.exe"
+		mspec.assemblies "assemblies/UndefeatedTicTacToe.Specs.dll"
+		mspec.html_output = "specs/UndefeatedTicTacToe.Specifications.html"
 	end
 end
