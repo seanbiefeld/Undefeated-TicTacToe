@@ -1,7 +1,7 @@
-﻿using System;
-using Machine.Specifications;
+﻿using Machine.Specifications;
 using Rhino.Mocks;
 using UndefeatedTicTacToe.model;
+using UndefeatedTicTacToe.Specs.GameSpecs;
 
 namespace UndefeatedTicTacToe.Specs
 {
@@ -94,18 +94,5 @@ namespace UndefeatedTicTacToe.Specs
 
 		It should_tell_the_bot_to_make_move = () =>
 			_bot.AssertWasCalled(bot => bot.MakeMove(_game));
-	}
-
-	[Subject("Move Played")]
-	public class when_a_valid_move_is_played : CreatedGameContext
-	{
-		static int _someXCoordinate = 2;
-		static int _someYCoordinate = 0;
-
-		Because of = () =>
-			_game.PlayMove(_someXCoordinate, _someYCoordinate, _bot);
-
-		It should_set_move_one_board = () =>
-			_game.Board[2,0].ShouldEqual(_bot);
 	}
 }
