@@ -42,7 +42,6 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="model\Board.cs" />
     <Compile Include="model\Bot.cs" />
     <Compile Include="model\Game.cs" />
     <Compile Include="model\Player.cs" />
