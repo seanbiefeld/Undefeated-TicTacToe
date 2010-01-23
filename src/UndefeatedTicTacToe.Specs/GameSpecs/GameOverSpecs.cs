@@ -7,7 +7,7 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 
 	}
 
-	[Subject("Game OVer")]
+	[Subject("Game Over")]
 	[Ignore]
 	public class when_setting_the_one_one_to_get_horizontal_three_in_a_row : GameOverContext
 	{

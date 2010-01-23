@@ -73,11 +73,40 @@ function toggleVisibility(id, description) {
         }</script>
   </head>
   <body>
-    <h1>UndefeatedTicTacToe.Specs&nbsp;&nbsp;&nbsp;&nbsp;</h1><span class="count"><h2>2 concerns, 4 contexts, 7 specifications </h2><br></span><hr>
+    <h1>UndefeatedTicTacToe.Specs&nbsp;&nbsp;&nbsp;&nbsp;</h1><span class="count"><h2>4 concerns, 9 contexts, 17 specifications </h2><br></span><hr>
 <hr>
-<h2 class="concern">Move Played specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">1 context, 1 specification</span></h3>
+<h2 class="concern">End Turn specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">1 context, 1 specification</span></h3>
 
-<h3 class="context">when a valid move is played&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification</span></h4><ul>	<li>should set move one board</li>
+<h3 class="context">when player ends turn&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification</span></h4><ul>	<li>should set next player</li>
+</ul>
+
+<hr>
+<h2 class="concern">Game OVer specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">1 context, 3 specifications</span></h3>
+
+<h3 class="context">when setting the one one to get horizontal three in a row&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">3 specifications</span></h4><ul></li>
+</li>
+</li>
+</ul>
+
+<hr>
+<h2 class="concern">Move Played specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">4 contexts, 7 specifications</span></h3>
+
+<h3 class="context">when a valid move is played&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">3 specifications</span></h4><ul>	<li>should set move on board</li>
+	<li>should specify move is valid</li>
+	<li>should set next player</li>
+</ul>
+
+
+<h3 class="context">when coordinates are greater than tictactoe grid&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification</span></h4><ul>	<li>should specify move is not valid</li>
+</ul>
+
+
+<h3 class="context">when coordinates are in conflict&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">2 specifications</span></h4><ul>	<li>should not set other player at coordinates</li>
+	<li>should specify move is not valid</li>
+</ul>
+
+
+<h3 class="context">when coordinates are negative&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification</span></h4><ul>	<li>should specify move is not valid</li>
 </ul>
 
 <hr>
@@ -88,8 +117,8 @@ function toggleVisibility(id, description) {
 
 
 <h3 class="context">when creating a new game&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">4 specifications</span></h4><ul>	<li>should create the board</li>
-	<li>should set the opponent</li>
-	<li>should set the bot</li>
+	<li>should set some player</li>
+	<li>should set some other player</li>
 	<li>should set next player</li>
 </ul>
 
