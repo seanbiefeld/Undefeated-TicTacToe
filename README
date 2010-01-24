@@ -1,0 +1,2 @@
+Ensure you have ruby, rake and albacore(provided in the library), and .net 3.5 framework installed
+then open a command prompt to the root directory of this project and type 'rake'
