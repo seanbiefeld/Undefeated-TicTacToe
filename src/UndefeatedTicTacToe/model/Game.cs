@@ -48,14 +48,39 @@
 
 		void SetNextPlayer(Player currentPlayer)
 		{
-			NextPlayer = currentPlayer == SomePlayer ? SomeOtherPlayer : SomePlayer;
+			NextPlayer = GetOpponent(currentPlayer);
 		}
 
 		void DetermineIfMoveCausedWin(int xCoordinate, int yCoordinate, Player currentPlayer)
 		{
-			//horizontal check y remains constant
+			int xcount = 0;
+			int ycount = 0;
 
-			//vertical check x remains constant
+			for (int i = 0; i < 3; i++)
+			{
+				for (int j = 0; j < 3; j++)
+				{
+					if(Board[i,j] == currentPlayer)
+					{
+						if(i == xCoordinate)
+							xcount++;
+						if(j == yCoordinate)
+							ycount++;
+					}
+				}
+			}
+
+			if(xcount == 3 || ycount == 3)
+			{
+				Winner = currentPlayer;
+				Loser = GetOpponent(currentPlayer);
+				Over = true;
+			}
+		}
+
+		Player GetOpponent(Player currentPlayer)
+		{
+			return currentPlayer == SomePlayer ? SomeOtherPlayer : SomePlayer;
 		}
 
 		static bool CoordinatesAreNotOnBoard(int xCoordinate, int yCoordinate)
