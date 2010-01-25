@@ -44,7 +44,7 @@
     </Compile>
     <Compile Include="model\Bot.cs" />
     <Compile Include="model\Game.cs" />
-    <Compile Include="model\Player.cs" />
+    <Compile Include="model\IPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

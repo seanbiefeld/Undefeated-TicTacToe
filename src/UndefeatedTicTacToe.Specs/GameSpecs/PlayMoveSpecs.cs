@@ -1,6 +1,5 @@
 ﻿using Machine.Specifications;
 using Rhino.Mocks;
-using UndefeatedTicTacToe.model;
 
 namespace UndefeatedTicTacToe.Specs.GameSpecs
 {
@@ -12,8 +11,8 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 
 		Establish play_move_context = () =>
 		{
-			_somePlayer = new Player();
-			_someOtherPlayer = new Player();
+			_somePlayer = new TestablePlayer();
+			_someOtherPlayer = new TestablePlayer();
 			_game = new TestableGame(_somePlayer, _someOtherPlayer, _somePlayer);
 		};
 	}

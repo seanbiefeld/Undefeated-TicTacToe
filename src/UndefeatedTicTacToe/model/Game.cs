@@ -1,23 +1,24 @@
-﻿using System;
-
-namespace UndefeatedTicTacToe.model
+﻿namespace UndefeatedTicTacToe.model
 {
 	public class Game
 	{
-		protected Player SomePlayer { get; set; }
-		protected Player SomeOtherPlayer { get; set; }
-		public virtual Player[,] Board { get; protected set; }
+		protected IPlayer SomePlayer { get; set; }
+		protected IPlayer SomeOtherPlayer { get; set; }
+		public virtual IPlayer[,] Board { get; protected set; }
 		public virtual bool Over{ get; set; }
-		protected Player NextPlayer { get; set; }
-		public Player Winner { get; protected set; }
-		public Player Loser { get; protected set; }
+		protected IPlayer NextPlayer { get; set; }
+		public IPlayer Winner { get; protected set; }
+		public IPlayer Loser { get; protected set; }
 
-		public Game(Player somePlayer, Player someOtherPlayer, Player firstPlayer)
+		public static readonly int BoardWidth = 3;
+		public static readonly int BoardLength = 3;
+
+		public Game(IPlayer someIPlayer, IPlayer someOtherIPlayer, IPlayer firstIPlayer)
 		{
-			Board = new Player[3, 3];
-			SomePlayer = somePlayer;
-			SomeOtherPlayer = someOtherPlayer;
-			NextPlayer = firstPlayer;
+			Board = new IPlayer[BoardWidth, BoardLength];
+			SomePlayer = someIPlayer;
+			SomeOtherPlayer = someOtherIPlayer;
+			NextPlayer = firstIPlayer;
 
 			NextPlayer.MakeMove(this);
 		}
@@ -27,7 +28,7 @@ namespace UndefeatedTicTacToe.model
 			NextPlayer.MakeMove(this);
 		}
 
-		public virtual bool PlayMove(int xCoordinate, int yCoordinate, Player currentPlayer)
+		public virtual bool PlayMove(int xCoordinate, int yCoordinate, IPlayer currentIPlayer)
 		{
 			if (CoordinatesAreNotOnBoard(xCoordinate, yCoordinate))
 				return false;
@@ -36,11 +37,11 @@ namespace UndefeatedTicTacToe.model
 
 			if(position == null)
 			{
-                Board[xCoordinate, yCoordinate] = currentPlayer;
+                Board[xCoordinate, yCoordinate] = currentIPlayer;
 
-				DetermineIfMoveCausedWin(xCoordinate, yCoordinate, currentPlayer);
+				DetermineIfMoveCausedWin(xCoordinate, yCoordinate, currentIPlayer);
 
-				SetNextPlayer(currentPlayer);
+				SetNextIPlayer(currentIPlayer);
 
 				return true;
 			}
@@ -48,44 +49,44 @@ namespace UndefeatedTicTacToe.model
 			return false;
 		}
 
-		void SetNextPlayer(Player currentPlayer)
+		void SetNextIPlayer(IPlayer currentIPlayer)
 		{
-			NextPlayer = GetOpponent(currentPlayer);
+			NextPlayer = GetOpponent(currentIPlayer);
 		}
 
-		void DetermineIfMoveCausedWin(int xCoordinate, int yCoordinate, Player currentPlayer)
+		void DetermineIfMoveCausedWin(int xCoordinate, int yCoordinate, IPlayer currentIPlayer)
 		{
-			LookForHorizontalAndVerticalThreeInARow(currentPlayer, xCoordinate, yCoordinate);
+			LookForHorizontalAndVerticalThreeInARow(currentIPlayer, xCoordinate, yCoordinate);
 
-			LookForDiagonalThreeInARow(currentPlayer);
+			LookForDiagonalThreeInARow(currentIPlayer);
 		}
 
-		void LookForDiagonalThreeInARow(Player currentPlayer)
+		void LookForDiagonalThreeInARow(IPlayer currentIPlayer)
 		{
 			bool threeInARowExists = false;
 
 			//check bottom left to top right
-			if(Board[0,0] == currentPlayer && Board[1,1] == currentPlayer && Board[2,2] == currentPlayer)
+			if(Board[0,0] == currentIPlayer && Board[1,1] == currentIPlayer && Board[2,2] == currentIPlayer)
 				threeInARowExists = true;
 
 			//check bottom right to top left
-			if(Board[2,0] == currentPlayer && Board[1,1] == currentPlayer && Board[0,2] == currentPlayer)
+			if(Board[2,0] == currentIPlayer && Board[1,1] == currentIPlayer && Board[0,2] == currentIPlayer)
 				threeInARowExists = true;
 
 			if(threeInARowExists)
-				GameOver(currentPlayer);
+				GameOver(currentIPlayer);
 		}
 
-		void LookForHorizontalAndVerticalThreeInARow(Player currentPlayer, int xCoordinate, int yCoordinate)
+		void LookForHorizontalAndVerticalThreeInARow(IPlayer currentIPlayer, int xCoordinate, int yCoordinate)
 		{
 			int xcount = 0;
 			int ycount = 0;
 
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < BoardWidth; i++)
 			{
-				for (int j = 0; j < 3; j++)
+				for (int j = 0; j < BoardLength; j++)
 				{
-					if(Board[i,j] == currentPlayer)
+					if(Board[i,j] == currentIPlayer)
 					{
 						if(i == xCoordinate)
 							xcount++;
@@ -97,20 +98,20 @@ namespace UndefeatedTicTacToe.model
 
 			if(xcount == 3 || ycount == 3)
 			{
-				GameOver(currentPlayer);
+				GameOver(currentIPlayer);
 			}
 		}
 
-		void GameOver(Player currentPlayer)
+		void GameOver(IPlayer currentIPlayer)
 		{
-			Winner = currentPlayer;
-			Loser = GetOpponent(currentPlayer);
+			Winner = currentIPlayer;
+			Loser = GetOpponent(currentIPlayer);
 			Over = true;
 		}
 
-		Player GetOpponent(Player currentPlayer)
+		IPlayer GetOpponent(IPlayer currentIPlayer)
 		{
-			return currentPlayer == SomePlayer ? SomeOtherPlayer : SomePlayer;
+			return currentIPlayer == SomePlayer ? SomeOtherPlayer : SomePlayer;
 		}
 
 		static bool CoordinatesAreNotOnBoard(int xCoordinate, int yCoordinate)

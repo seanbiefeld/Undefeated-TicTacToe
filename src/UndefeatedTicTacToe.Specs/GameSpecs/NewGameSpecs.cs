@@ -7,17 +7,25 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 	public class GameContext
 	{
 		protected static TestableGame _game;
-		protected static Player _somePlayer;
-		protected static Player _someOtherPlayer;
+		protected static IPlayer _somePlayer;
+		protected static IPlayer _someOtherPlayer;
+
+		protected class TestablePlayer : IPlayer
+		{
+			public void MakeMove(Game game)
+			{
+				
+			}
+		}
         
 		protected class TestableGame : Game
 		{
-			public TestableGame(Player somePlayer, Player someOtherPlayer, Player firstPlayer)
+			public TestableGame(IPlayer somePlayer, IPlayer someOtherPlayer, IPlayer firstPlayer)
 				: base(somePlayer, someOtherPlayer, firstPlayer)
 			{
 			}
 
-			public Player TestableSomePlayer
+			public IPlayer TestableSomePlayer
 			{
 				get
 				{
@@ -25,7 +33,7 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 				}
 			}
 
-			public Player TestableSomeOtherPlayer
+			public IPlayer TestableSomeOtherPlayer
 			{
 				get
 				{
@@ -33,7 +41,7 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 				}
 			}
 
-			public Player TestableNextPlayer
+			public IPlayer TestableNextPlayer
 			{
 				get
 				{
@@ -44,8 +52,8 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 
 		Establish game_context = () =>
 		{
-			_somePlayer = MockRepository.GenerateMock<Player>();
-			_someOtherPlayer = MockRepository.GenerateMock<Player>();
+			_somePlayer = MockRepository.GenerateMock<IPlayer>();
+			_someOtherPlayer = MockRepository.GenerateMock<IPlayer>();
 		};
 	}
 
