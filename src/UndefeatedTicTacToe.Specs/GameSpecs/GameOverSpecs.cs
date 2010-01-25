@@ -52,7 +52,7 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 	}
 
 	[Subject("Game Over")]
-	public class when_getting_no_three_in_a_row : GameOverContext
+	public class when_not_getting_three_in_a_row : GameOverContext
 	{
 		Establish context = () =>
 		{
@@ -65,5 +65,35 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 
 		It should_not_end_the_game = () =>
 			_game.Over.ShouldBeFalse();
+	}
+
+	[Subject("Game Over")]
+	public class when_getting_three_in_a_row_diagonally_from_bottom_left_to_top_right : GameOverContext
+	{
+		Establish context = () =>
+		{
+			_game.PlayMove(0, 0, _somePlayer);
+			_game.PlayMove(2, 2, _somePlayer);
+		};
+
+		Because of = () =>
+			_game.PlayMove(1,1,_somePlayer);
+
+		Behaves_like<game_is_over_and_some_player_won> game_should_be_over_some_player_should_have_won;
+	}
+
+	[Subject("Game Over")]
+	public class when_getting_three_in_a_row_diagonally_from_bottom_right_to_top_left : GameOverContext
+	{
+		Establish context = () =>
+		{
+			_game.PlayMove(2, 0, _somePlayer);
+			_game.PlayMove(0, 2, _somePlayer);
+		};
+
+		Because of = () =>
+			_game.PlayMove(1, 1, _somePlayer);
+
+		Behaves_like<game_is_over_and_some_player_won> game_should_be_over_some_player_should_have_won;
 	}
 }

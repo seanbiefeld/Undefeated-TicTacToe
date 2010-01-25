@@ -1,4 +1,6 @@
-﻿namespace UndefeatedTicTacToe.model
+﻿using System;
+
+namespace UndefeatedTicTacToe.model
 {
 	public class Game
 	{
@@ -53,6 +55,29 @@
 
 		void DetermineIfMoveCausedWin(int xCoordinate, int yCoordinate, Player currentPlayer)
 		{
+			LookForHorizontalAndVerticalThreeInARow(currentPlayer, xCoordinate, yCoordinate);
+
+			LookForDiagonalThreeInARow(currentPlayer);
+		}
+
+		void LookForDiagonalThreeInARow(Player currentPlayer)
+		{
+			bool threeInARowExists = false;
+
+			//check bottom left to top right
+			if(Board[0,0] == currentPlayer && Board[1,1] == currentPlayer && Board[2,2] == currentPlayer)
+				threeInARowExists = true;
+
+			//check bottom right to top left
+			if(Board[2,0] == currentPlayer && Board[1,1] == currentPlayer && Board[0,2] == currentPlayer)
+				threeInARowExists = true;
+
+			if(threeInARowExists)
+				GameOver(currentPlayer);
+		}
+
+		void LookForHorizontalAndVerticalThreeInARow(Player currentPlayer, int xCoordinate, int yCoordinate)
+		{
 			int xcount = 0;
 			int ycount = 0;
 
@@ -72,10 +97,15 @@
 
 			if(xcount == 3 || ycount == 3)
 			{
-				Winner = currentPlayer;
-				Loser = GetOpponent(currentPlayer);
-				Over = true;
+				GameOver(currentPlayer);
 			}
+		}
+
+		void GameOver(Player currentPlayer)
+		{
+			Winner = currentPlayer;
+			Loser = GetOpponent(currentPlayer);
+			Over = true;
 		}
 
 		Player GetOpponent(Player currentPlayer)
