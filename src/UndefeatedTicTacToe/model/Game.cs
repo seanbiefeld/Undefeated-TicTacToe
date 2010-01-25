@@ -23,7 +23,7 @@
 			NextPlayer.MakeMove(this);
 		}
 
-		public void EndTurn()
+		public virtual void EndTurn()
 		{
 			NextPlayer.MakeMove(this);
 		}
