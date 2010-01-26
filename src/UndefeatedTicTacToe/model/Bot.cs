@@ -26,6 +26,7 @@ namespace UndefeatedTicTacToe.model
 				if(OpponentPlayedCenter(opponentMoves))
 					PlayDefaultCorner(game);
 			}
+			MovesPlayed++;
 		}
 
 		static bool OpponentPlayedCenter(Dictionary<int, int> opponentMoves)
