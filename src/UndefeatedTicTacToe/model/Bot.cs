@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace UndefeatedTicTacToe.model
 {
@@ -14,13 +15,13 @@ namespace UndefeatedTicTacToe.model
 
 		public void MakeMove(Game game)
 		{
-			Dictionary<int, int> opponentMoves = GetOpponentsMoves(game);
-			Dictionary<int, int> movesMade = GetMovesMade(game);
-			Dictionary<int, int> possibleNextMoves = GetNextPossibleMoves(game);
+			IEnumerable<Coordinate> opponentMoves = GetOpponentsMoves(game);
+			IEnumerable<Coordinate> movesMade = GetMovesMade(game);
+			IEnumerable<Coordinate> possibleNextMoves = GetNextPossibleMoves(game);
 
 			if(MovesPlayed == 0)
 			{
-				if (opponentMoves.Count == 0)
+				if (!opponentMoves.Any())
 					PlayDefaultCorner(game);
 
 				if (OpponentPlayedCorner(opponentMoves))
@@ -38,7 +39,7 @@ namespace UndefeatedTicTacToe.model
 			MovesPlayed++;
 		}
 
-		void PlayBestMove(Dictionary<int, int> movesMade, Dictionary<int, int> possibleNextMoves, Game game)
+		void PlayBestMove(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, Game game)
 		{
 			int nextXCoordinate;
 			int nextYCoordinate;
@@ -52,29 +53,29 @@ namespace UndefeatedTicTacToe.model
 			
 		//}
 
-		static bool OpponentPlayedEdge(Dictionary<int, int> opponentMoves)
+		static bool OpponentPlayedEdge(IEnumerable<Coordinate> opponentMoves)
 		{
 			return !(OpponentPlayedCenter(opponentMoves) && OpponentPlayedCorner(opponentMoves));
 		}
 
-		static bool OpponentPlayedCenter(Dictionary<int, int> opponentMoves)
+		static bool OpponentPlayedCenter(IEnumerable<Coordinate> opponentMoves)
 		{
-			foreach (KeyValuePair<int, int> opponentMove in opponentMoves)
+			foreach (Coordinate opponentMove in opponentMoves)
 			{
-				if(opponentMove.Key == 1 && opponentMove.Value == 1)
+				if(opponentMove.XValue == 1 && opponentMove.YValue == 1)
 					return true;
 			}
 
 			return false;
 		}
 
-		static bool OpponentPlayedCorner(Dictionary<int, int> opponentMoves)
+		static bool OpponentPlayedCorner(IEnumerable<Coordinate> opponentMoves)
 		{
-			foreach (KeyValuePair<int, int> opponentMove in opponentMoves)
+			foreach (Coordinate opponentMove in opponentMoves)
 			{
-				if(opponentMove.Value == 0 || opponentMove.Value == 2)
+				if(opponentMove.YValue == 0 || opponentMove.YValue == 2)
 				{
-					if(opponentMove.Key == 0 || opponentMove.Key == 2)
+					if(opponentMove.XValue == 0 || opponentMove.XValue == 2)
 						return true;
 				}
 			}
@@ -82,24 +83,24 @@ namespace UndefeatedTicTacToe.model
 			return false;
 		}
 
-		Dictionary<int, int> GetNextPossibleMoves(Game game)
+		static IEnumerable<Coordinate> GetNextPossibleMoves(Game game)
 		{
 			return GetMoves(game, currentPlayer => currentPlayer == null);
 		}
 
-		Dictionary<int, int> GetMovesMade(Game game)
+		IEnumerable<Coordinate> GetMovesMade(Game game)
 		{
 			return GetMoves(game, currentPlayer => (currentPlayer != null && currentPlayer == this));
 		}
 
-		Dictionary<int,int> GetOpponentsMoves(Game game)
+		IEnumerable<Coordinate> GetOpponentsMoves(Game game)
 		{
 			return GetMoves(game, currentPlayer => (currentPlayer != null && currentPlayer != this));
 		}
 
-		Dictionary<int, int> GetMoves(Game game, Predicate<IPlayer> logicToDetermineIfMoveIsAdded)
+		static IEnumerable<Coordinate> GetMoves(Game game, Predicate<IPlayer> logicToDetermineIfMoveIsAdded)
 		{
-			Dictionary<int, int> moves = new Dictionary<int, int>();
+			IList<Coordinate> moves = new List<Coordinate>();
 
 			for (int i = 0; i < Game.BoardWidth; i++)
 			{
@@ -108,7 +109,7 @@ namespace UndefeatedTicTacToe.model
 					IPlayer playerInCurrentCell = game.Board[i, j];
 
 					if(logicToDetermineIfMoveIsAdded(playerInCurrentCell))
-						moves.Add(i,j);
+						moves.Add(new Coordinate(i,j));
 				}
 			}
 
