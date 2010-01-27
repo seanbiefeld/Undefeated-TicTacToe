@@ -41,17 +41,42 @@ namespace UndefeatedTicTacToe.model
 
 		void PlayBestMove(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, Game game)
 		{
-			int nextXCoordinate;
-			int nextYCoordinate;
+			int? nextXValue;
+			int? nextYValue;
 
-			//if (TwoInARowExist(movesMade, possibleNextMoves, out nextXCoordinate, out nextYCoordinate))
-				//Play(nextXCoordinate, nextYCoordinate, game);
+			if (TwoInARowExist(movesMade, possibleNextMoves, out nextXValue, out nextYValue))
+				Play(nextXValue.Value, nextYValue.Value, game);
 		}
 
-		//bool TwoInARowExist(Dictionary<int, int> movesMade, Dictionary<int, int> possibleNextMoves, out int xCoordinate, out int yCoordinate)
-		//{
-			
-		//}
+		bool TwoInARowExist(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, out int? xCoordinate, out int? yCoordinate)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				//check horizontal moves
+				int yValue = i;
+				if (movesMade.Where(move => move.YValue == yValue).Count() == 2)
+				{
+					var nextMove = possibleNextMoves.Where(move => move.YValue == yValue).First();
+					xCoordinate = nextMove.XValue;
+					yCoordinate = nextMove.YValue;
+					return true;
+				}
+
+				//check vertical moves
+				int xValue = i;
+				if (movesMade.Where(move => move.XValue == xValue).Count() == 2)
+				{
+					var nextMove = possibleNextMoves.Where(move => move.XValue == xValue).First();
+					xCoordinate = nextMove.XValue;
+					yCoordinate = nextMove.YValue;
+					return true;
+				}
+			}
+
+			xCoordinate = null;
+			yCoordinate = null;
+			return false;
+		}
 
 		static bool OpponentPlayedEdge(IEnumerable<Coordinate> opponentMoves)
 		{
@@ -60,13 +85,7 @@ namespace UndefeatedTicTacToe.model
 
 		static bool OpponentPlayedCenter(IEnumerable<Coordinate> opponentMoves)
 		{
-			foreach (Coordinate opponentMove in opponentMoves)
-			{
-				if(opponentMove.XValue == 1 && opponentMove.YValue == 1)
-					return true;
-			}
-
-			return false;
+			return opponentMoves.Where(move => move.XValue == 1 && move.YValue == 1).Any();
 		}
 
 		static bool OpponentPlayedCorner(IEnumerable<Coordinate> opponentMoves)

@@ -14,6 +14,10 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 				{
 					return MovesPlayed;
 				}
+				set
+				{
+					MovesPlayed = value;
+				}
 			}
 		}
 
