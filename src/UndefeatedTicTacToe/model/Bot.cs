@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace UndefeatedTicTacToe.model
 {
@@ -14,6 +15,8 @@ namespace UndefeatedTicTacToe.model
 		public void MakeMove(Game game)
 		{
 			Dictionary<int, int> opponentMoves = GetOpponentsMoves(game);
+			Dictionary<int, int> movesMade = GetMovesMade(game);
+			Dictionary<int, int> possibleNextMoves = GetNextPossibleMoves(game);
 
 			if(MovesPlayed == 0)
 			{
@@ -29,8 +32,25 @@ namespace UndefeatedTicTacToe.model
 				if(OpponentPlayedEdge(opponentMoves))
 					PlayCenter(game);
 			}
+			else
+				PlayBestMove(movesMade, possibleNextMoves, game);
+
 			MovesPlayed++;
 		}
+
+		void PlayBestMove(Dictionary<int, int> movesMade, Dictionary<int, int> possibleNextMoves, Game game)
+		{
+			int nextXCoordinate;
+			int nextYCoordinate;
+
+			//if (TwoInARowExist(movesMade, possibleNextMoves, out nextXCoordinate, out nextYCoordinate))
+				//Play(nextXCoordinate, nextYCoordinate, game);
+		}
+
+		//bool TwoInARowExist(Dictionary<int, int> movesMade, Dictionary<int, int> possibleNextMoves, out int xCoordinate, out int yCoordinate)
+		//{
+			
+		//}
 
 		static bool OpponentPlayedEdge(Dictionary<int, int> opponentMoves)
 		{
@@ -62,9 +82,24 @@ namespace UndefeatedTicTacToe.model
 			return false;
 		}
 
+		Dictionary<int, int> GetNextPossibleMoves(Game game)
+		{
+			return GetMoves(game, currentPlayer => currentPlayer == null);
+		}
+
+		Dictionary<int, int> GetMovesMade(Game game)
+		{
+			return GetMoves(game, currentPlayer => (currentPlayer != null && currentPlayer == this));
+		}
+
 		Dictionary<int,int> GetOpponentsMoves(Game game)
 		{
-			Dictionary<int,int> opponentsMoves = new Dictionary<int, int>();
+			return GetMoves(game, currentPlayer => (currentPlayer != null && currentPlayer != this));
+		}
+
+		Dictionary<int, int> GetMoves(Game game, Predicate<IPlayer> logicToDetermineIfMoveIsAdded)
+		{
+			Dictionary<int, int> moves = new Dictionary<int, int>();
 
 			for (int i = 0; i < Game.BoardWidth; i++)
 			{
@@ -72,12 +107,12 @@ namespace UndefeatedTicTacToe.model
 				{
 					IPlayer playerInCurrentCell = game.Board[i, j];
 
-					if(playerInCurrentCell != null && playerInCurrentCell != this)
-						opponentsMoves.Add(i,j);
+					if(logicToDetermineIfMoveIsAdded(playerInCurrentCell))
+						moves.Add(i,j);
 				}
 			}
 
-			return opponentsMoves;
+			return moves;
 		}
 
 		void PlayDefaultCorner(Game game)

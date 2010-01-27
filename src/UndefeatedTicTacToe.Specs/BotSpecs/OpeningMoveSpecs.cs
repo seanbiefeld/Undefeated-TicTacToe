@@ -4,7 +4,7 @@ using UndefeatedTicTacToe.model;
 
 namespace UndefeatedTicTacToe.Specs.BotSpecs
 {
-	public class OpeningMoveContext
+	public class MoveContext
 	{
 		protected class TestableBot : Bot
 		{
@@ -29,14 +29,14 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 	}
 
 	[Behaviors]
-	public class it_incremented_the_number_of_moves_played_by_one : OpeningMoveContext
+	public class it_incremented_the_number_of_moves_played_by_one : MoveContext
 	{
 		It should_increment_the_number_of_moves_made_by_one = () => 
 			_bot.TestableMovesPlayed.ShouldEqual(1);
 	}
 
 	[Subject("Opening Move")]
-	public class when_the_bot_has_the_first_move : OpeningMoveContext
+	public class when_the_bot_has_the_first_move : MoveContext
 	{
 		Because of = () =>
 			_game = new Game(_opponent, _bot, _bot);
@@ -48,7 +48,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 	}
 
 	[Subject("Opening Move")]
-	public class when_the_bot_has_the_second_move_and_the_opponents_move_was_a_corner : OpeningMoveContext
+	public class when_the_bot_has_the_second_move_and_the_opponents_move_was_a_corner : MoveContext
 	{
 		Establish context = () =>
 		{
@@ -66,7 +66,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 	}
 
 	[Subject("Opening Move")]
-	public class when_the_bot_has_the_second_move_and_the_opponents_move_was_the_center : OpeningMoveContext
+	public class when_the_bot_has_the_second_move_and_the_opponents_move_was_the_center : MoveContext
 	{
 		Establish context = () =>
 		{
@@ -84,7 +84,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 	}
 
 	[Subject("Opening Move")]
-	public class when_the_bot_has_the_second_move_and_the_opponents_move_was_the_edge : OpeningMoveContext
+	public class when_the_bot_has_the_second_move_and_the_opponents_move_was_the_edge : MoveContext
 	{
 		Establish context = () =>
 		{
