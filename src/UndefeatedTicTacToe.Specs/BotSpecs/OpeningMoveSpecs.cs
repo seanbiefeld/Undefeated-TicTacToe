@@ -82,4 +82,22 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 
 		Behaves_like<it_incremented_the_number_of_moves_played_by_one> should_increment_the_number_of_moves_made_by_one;
 	}
+
+	[Subject("Opening Move")]
+	public class when_the_bot_has_the_second_move_and_the_opponents_move_was_the_edge : OpeningMoveContext
+	{
+		Establish context = () =>
+		{
+			_game = new Game(_opponent, _bot, _opponent);
+			_game.PlayMove(2, 1, _opponent);
+		};
+
+		Because of = () =>
+			_game.EndTurn();
+
+		It should_play_the_center = () =>
+			_game.Board[1,1].ShouldEqual(_bot);
+
+		Behaves_like<it_incremented_the_number_of_moves_played_by_one> should_increment_the_number_of_moves_made_by_one;
+	}
 }
