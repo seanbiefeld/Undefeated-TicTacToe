@@ -24,19 +24,21 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 		protected static Game _game;
 		protected static TestableBot _bot;
 		protected static IPlayer _opponent;
+		protected static int _numberOfMoves;
 
 		Establish opening_move_context = () =>
 		{
 			_bot = new TestableBot();
 			_opponent = MockRepository.GenerateStub<IPlayer>();
+			_numberOfMoves = 0;
 		};
-	}
 
-	[Behaviors]
-	public class it_incremented_the_number_of_moves_played_by_one : MoveContext
-	{
-		It should_increment_the_number_of_moves_made_by_one = () => 
-			_bot.TestableMovesPlayed.ShouldEqual(1);
+		[Behaviors]
+		protected class it_incremented_the_number_of_moves_played_by_one : MoveContext
+		{
+			It should_increment_the_number_of_moves_made_by_one = () =>
+				_bot.TestableMovesPlayed.ShouldEqual(_numberOfMoves+1);
+		}
 	}
 
 	[Subject("Opening Move")]

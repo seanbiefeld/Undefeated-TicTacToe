@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,7 +49,7 @@ namespace UndefeatedTicTacToe.model
 				Play(nextXValue.Value, nextYValue.Value, game);
 		}
 
-		bool TwoInARowExist(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, out int? xCoordinate, out int? yCoordinate)
+		static bool TwoInARowExist(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, out int? xCoordinate, out int? yCoordinate)
 		{
 			for (int i = 0; i < 3; i++)
 			{
@@ -72,6 +73,14 @@ namespace UndefeatedTicTacToe.model
 					return true;
 				}
 			}
+
+			List<Coordinate> diagonalCoordinates = new List<Coordinate>();
+
+			diagonalCoordinates.AddRange(
+				movesMade.Where(move => 
+					(move.XValue == 0 && move.YValue == 0)
+					|| (move.XValue == 1 && move.YValue == 1)
+					|| (move.XValue == 2 && move.YValue == 2)));
 
 			xCoordinate = null;
 			yCoordinate = null;
