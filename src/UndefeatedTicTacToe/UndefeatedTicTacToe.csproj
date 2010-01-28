@@ -43,6 +43,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="model\Bot.cs" />
+    <Compile Include="model\BotStrategies\TwoInARow.cs" />
     <Compile Include="model\Coordinate.cs" />
     <Compile Include="model\Game.cs" />
     <Compile Include="model\IPlayer.cs" />
