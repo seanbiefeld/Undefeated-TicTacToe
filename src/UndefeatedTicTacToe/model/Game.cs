@@ -9,7 +9,7 @@
 		protected IPlayer NextPlayer { get; set; }
 		public IPlayer Winner { get; protected set; }
 		public IPlayer Loser { get; protected set; }
-
+		public bool Draw { get; protected set; }
 		public static readonly int BoardWidth = 3;
 		public static readonly int BoardLength = 3;
 
@@ -40,6 +40,8 @@
                 Board[xCoordinate, yCoordinate] = currentIPlayer;
 
 				DetermineIfMoveCausedWin(xCoordinate, yCoordinate, currentIPlayer);
+
+				DetermineIfMoveCausedDraw();
 
 				SetNextIPlayer(currentIPlayer);
 
@@ -99,6 +101,25 @@
 			if(xcount == 3 || ycount == 3)
 			{
 				GameOver(currentIPlayer);
+			}
+		}
+
+		void DetermineIfMoveCausedDraw()
+		{
+			bool noEmptyCoordinateExist = true;
+
+			for (int i = 0; i < BoardWidth; i++)
+			{
+				for (int j = 0; j < BoardLength; j++)
+				{
+					noEmptyCoordinateExist &= (Board[i, j] != null);
+				}
+			}
+
+			if(noEmptyCoordinateExist)
+			{
+				Over = true;
+				Draw = true;
 			}
 		}
 

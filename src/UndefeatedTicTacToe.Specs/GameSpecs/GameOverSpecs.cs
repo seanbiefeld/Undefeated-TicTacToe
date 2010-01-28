@@ -96,4 +96,35 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 
 		Behaves_like<game_is_over_and_some_player_won> game_should_be_over_some_player_should_have_won;
 	}
+
+	[Subject("Game Over")]
+	public class when_getting_its_a_draw : GameOverContext
+	{
+		Establish context = () =>
+		{
+			_game.TestableBoard[1, 1] = _somePlayer;
+			_game.TestableBoard[1, 0] = _someOtherPlayer;
+			_game.TestableBoard[1, 2] = _somePlayer;
+			_game.TestableBoard[0, 1] = _someOtherPlayer;
+			_game.TestableBoard[0, 0] = _somePlayer;
+			_game.TestableBoard[0, 2] = _someOtherPlayer;
+			_game.TestableBoard[2, 1] = _somePlayer;
+			_game.TestableBoard[2, 2] = _someOtherPlayer;
+		};
+
+		Because of = () =>
+			_game.PlayMove(2, 0, _somePlayer);
+
+		It should_end_the_game = () =>
+			_game.Over.ShouldBeTrue();
+
+		It should_not_declare_a_winner = () =>
+			_game.Winner.ShouldBeNull();
+
+		It should_not_declare_a_loser = () =>
+			_game.Loser.ShouldBeNull();
+
+		It should_declare_a_draw = () =>
+			_game.Draw.ShouldBeTrue();
+	}
 }

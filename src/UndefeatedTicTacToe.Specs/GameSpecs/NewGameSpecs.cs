@@ -48,6 +48,18 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 					return NextPlayer;
 				}
 			}
+
+			public IPlayer[,] TestableBoard
+			{
+				get
+				{
+					return Board;
+				}
+				set
+				{
+					Board = value;
+				}
+			}
 		}
 
 		Establish game_context = () =>
