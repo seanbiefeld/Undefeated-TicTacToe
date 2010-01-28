@@ -74,13 +74,59 @@ namespace UndefeatedTicTacToe.model
 				}
 			}
 
-			List<Coordinate> diagonalCoordinates = new List<Coordinate>();
+			Dictionary<Coordinate, bool> bottomRightToTopLeftChecks = new Dictionary<Coordinate, bool>
+			{
+				{new Coordinate(0, 0), false},
+				{new Coordinate(1, 1), false},
+				{new Coordinate(2, 2), false}
+			};
 
-			diagonalCoordinates.AddRange(
-				movesMade.Where(move => 
-					(move.XValue == 0 && move.YValue == 0)
-					|| (move.XValue == 1 && move.YValue == 1)
-					|| (move.XValue == 2 && move.YValue == 2)));
+			if (CanWinDiagonally(bottomRightToTopLeftChecks, movesMade, possibleNextMoves, out xCoordinate, out yCoordinate)) return true;
+
+			Dictionary<Coordinate, bool> bottomLeftToTopRightChecks = new Dictionary<Coordinate, bool>
+			{
+				{new Coordinate(2, 0), false},
+				{new Coordinate(1, 1), false},
+				{new Coordinate(0, 2), false}
+			};
+
+			if (CanWinDiagonally(bottomLeftToTopRightChecks, movesMade, possibleNextMoves, out xCoordinate, out yCoordinate))
+				return true;
+
+			xCoordinate = null;
+			yCoordinate = null;
+			return false;
+		}
+
+		static bool CanWinDiagonally(Dictionary<Coordinate, bool> checks, IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, out int? xCoordinate, out int? yCoordinate)
+		{
+			var coordinates = checks.Keys.ToArray();
+
+			foreach (Coordinate coordinate in coordinates)
+			{
+				Coordinate currentCoordinate = coordinate;
+
+				if(movesMade.Where(move=>move.XValue == currentCoordinate.XValue
+				&& move.YValue == currentCoordinate.YValue).Any())
+					checks[currentCoordinate] = true;
+			}
+
+			if(checks.Where(check => check.Value == false).Count() == 1)
+			{
+				var moveToplay = checks.Where(check => check.Value == false).First();
+
+				if (moveToplay.Key != null)
+				{
+					Coordinate coordinateToPlay = moveToplay.Key;
+
+					if (possibleNextMoves.Contains(coordinateToPlay))
+					{
+						xCoordinate = coordinateToPlay.XValue;
+						yCoordinate = coordinateToPlay.YValue;
+						return true;
+					}
+				}
+			}
 
 			xCoordinate = null;
 			yCoordinate = null;

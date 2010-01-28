@@ -73,7 +73,7 @@ function toggleVisibility(id, description) {
         }</script>
   </head>
   <body>
-    <h1>UndefeatedTicTacToe.Specs&nbsp;&nbsp;&nbsp;&nbsp;</h1><span class="count"><h2>6 concerns, 20 contexts, 41 specifications, <span class="failure">1 failure</span> </h2><br></span><hr>
+    <h1>UndefeatedTicTacToe.Specs&nbsp;&nbsp;&nbsp;&nbsp;</h1><span class="count"><h2>6 concerns, 21 contexts, 43 specifications </h2><br></span><hr>
 <hr>
 <h2 class="concern">End Turn specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">1 context, 1 specification</span></h3>
 
@@ -132,19 +132,19 @@ function toggleVisibility(id, description) {
 </ul>
 
 <hr>
-<h2 class="concern">Move Strategy specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">3 contexts, 6 specifications, <span class="failure">1 failure</span></span></h3>
+<h2 class="concern">Move Strategy specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">4 contexts, 8 specifications</span></h3>
 
 <h3 class="context">when the bot has two horizontal in a row&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">2 specifications</span></h4><ul>	<li>should play the third and win</li>
 	<li>should increment the number of moves made by one</li>
 </ul>
 
 
-<h3 class="context">when the bot has two in a row diagonally&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">2 specifications, <span class="failure">1 failure</span></span></h4><ul>	<li>should play the third and win <div class="failure">&lt;--FAILED</div><br/><p class="exception_type">Machine.Specifications.ExceptionResult<pre class="exception_message">Rhino.Mocks.Exceptions.ExpectationViolationException: Game.PlayMove(2, 2, UndefeatedTicTacToe.Specs.BotSpecs.MoveContext+TestableBot); Expected #1, Actual #0.
-   at Rhino.Mocks.RhinoMocksExtensions.AssertWasCalled[T](T mock, Action`1 action, Action`1 setupConstraints)
-   at Rhino.Mocks.RhinoMocksExtensions.AssertWasCalled[T](T mock, Func`2 action)
-   at UndefeatedTicTacToe.Specs.BotSpecs.when_the_bot_has_two_in_a_row_diagonally.<.ctor>b__2() in c:\Dev\undeafeated-tictactoe\src\UndefeatedTicTacToe.Specs\BotSpecs\MoveStrategySpecs.cs:line 109
-   at Machine.Specifications.Model.Specification.InvokeSpecificationField() in C:\Dev\mspec\Source\Machine.Specifications\Model\Specification.cs:line 75
-   at Machine.Specifications.Model.Specification.Verify() in C:\Dev\mspec\Source\Machine.Specifications\Model\Specification.cs:line 53</pre></p></li>
+<h3 class="context">when the bot has two in a row diagonally from bottom left to top right&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">2 specifications</span></h4><ul>	<li>should play the third and win</li>
+	<li>should increment the number of moves made by one</li>
+</ul>
+
+
+<h3 class="context">when the bot has two in a row diagonally from bottom right to top left&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">2 specifications</span></h4><ul>	<li>should play the third and win</li>
 	<li>should increment the number of moves made by one</li>
 </ul>
 
