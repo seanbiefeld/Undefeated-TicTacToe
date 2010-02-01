@@ -1,33 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace UndefeatedTicTacToe.model.BotStrategies
 {
 	public class TwoInARow
 	{
-		public static bool Exist(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, out int? xCoordinate, out int? yCoordinate)
+		public static bool Exist
+		(
+			IEnumerable<Coordinate> movesMade,
+			IEnumerable<Coordinate> possibleNextMoves,
+			out int? xCoordinate,
+			out int? yCoordinate
+		)
 		{
 			for (int i = 0; i < 3; i++)
 			{
 				//check horizontal moves
 				int yValue = i;
-				if (movesMade.Where(move => move.YValue == yValue).Count() == 2)
-				{
-					var nextMove = possibleNextMoves.Where(move => move.YValue == yValue).First();
-					xCoordinate = nextMove.XValue;
-					yCoordinate = nextMove.YValue;
+				if (VerticalOrHorizontalThreeInARowIsPossible
+					(move=>move.YValue == yValue,
+					movesMade, 
+					possibleNextMoves, 
+					out xCoordinate, 
+					out yCoordinate))
 					return true;
-				}
 
 				//check vertical moves
 				int xValue = i;
-				if (movesMade.Where(move => move.XValue == xValue).Count() == 2)
-				{
-					var nextMove = possibleNextMoves.Where(move => move.XValue == xValue).First();
-					xCoordinate = nextMove.XValue;
-					yCoordinate = nextMove.YValue;
+				if (VerticalOrHorizontalThreeInARowIsPossible
+					(move => move.XValue == xValue,
+					movesMade,
+					possibleNextMoves, 
+					out xCoordinate, 
+					out yCoordinate))
 					return true;
-				}
 			}
 
 			Dictionary<Coordinate, bool> bottomRightToTopLeftChecks = new Dictionary<Coordinate, bool>
@@ -37,7 +44,12 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 				{new Coordinate(2, 2), false}
 			};
 
-			if (CanWinDiagonally(bottomRightToTopLeftChecks, movesMade, possibleNextMoves, out xCoordinate, out yCoordinate))
+			if (CanWinDiagonally
+				(bottomRightToTopLeftChecks, 
+				movesMade, 
+				possibleNextMoves, 
+				out xCoordinate, 
+				out yCoordinate))
 				return true;
 
 			Dictionary<Coordinate, bool> bottomLeftToTopRightChecks = new Dictionary<Coordinate, bool>
@@ -47,7 +59,12 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 				{new Coordinate(0, 2), false}
 			};
 
-			if (CanWinDiagonally(bottomLeftToTopRightChecks, movesMade, possibleNextMoves, out xCoordinate, out yCoordinate))
+			if (CanWinDiagonally
+				(bottomLeftToTopRightChecks, 
+				movesMade, 
+				possibleNextMoves, 
+				out xCoordinate, 
+				out yCoordinate))
 				return true;
 
 			xCoordinate = null;
@@ -55,7 +72,41 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 			return false;
 		}
 
-		static bool CanWinDiagonally(Dictionary<Coordinate, bool> checks, IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, out int? xCoordinate, out int? yCoordinate)
+		static bool VerticalOrHorizontalThreeInARowIsPossible
+		(
+			Func<Coordinate, bool> coordinateCheck, 
+			IEnumerable<Coordinate> movesMade, 
+			IEnumerable<Coordinate> possibleNextMoves, 
+			out int? xCoordinate, 
+			out int? yCoordinate
+		)
+		{
+			if (movesMade.Where(coordinateCheck).Count() == 2)
+			{
+				var results = possibleNextMoves.Where(coordinateCheck);
+
+				if (results.Any())
+				{
+					var nextMove = results.First();
+					xCoordinate = nextMove.XValue;
+					yCoordinate = nextMove.YValue;
+					return true;
+				}
+			}
+
+			xCoordinate = null;
+			yCoordinate = null;
+			return false;
+		}
+
+		static bool CanWinDiagonally
+		(
+			Dictionary<Coordinate, bool> checks, 
+			IEnumerable<Coordinate> movesMade, 
+			IEnumerable<Coordinate> possibleNextMoves, 
+			out int? xCoordinate, 
+			out int? yCoordinate
+		)
 		{
 			var coordinates = checks.Keys.ToArray();
 
