@@ -19,7 +19,7 @@ namespace UndefeatedTicTacToe.model
 			IEnumerable<Coordinate> opponentMoves = GetOpponentsMoves(game);
 			IEnumerable<Coordinate> movesMade = GetMovesMade(game);
 			IEnumerable<Coordinate> possibleNextMoves = GetNextPossibleMoves(game);
-
+			
 			if(MovesPlayed == 0)
 			{
 				if (!opponentMoves.Any())
@@ -35,17 +35,19 @@ namespace UndefeatedTicTacToe.model
 					PlayCenter(game);
 			}
 			else
-				PlayBestMove(movesMade, possibleNextMoves, game);
+				PlayBestMove(movesMade, opponentMoves, possibleNextMoves, game);
 
 			MovesPlayed++;
 		}
 
-		void PlayBestMove(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, Game game)
+		void PlayBestMove(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> opponentMovesMade, IEnumerable<Coordinate> possibleNextMoves, Game game)
 		{
 			int? nextXValue;
 			int? nextYValue;
 
 			if (TwoInARow.Exist(movesMade, possibleNextMoves, out nextXValue, out nextYValue))
+				Play(nextXValue.Value, nextYValue.Value, game);
+			else if(TwoInARow.Exist(opponentMovesMade, possibleNextMoves, out nextXValue, out nextYValue))
 				Play(nextXValue.Value, nextYValue.Value, game);
 		}
 
