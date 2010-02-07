@@ -71,6 +71,13 @@ namespace UndefeatedTicTacToe.model
 				Play(corner.XValue, corner.YValue, game);
 			}
 
+			IEnumerable<Coordinate> sides = possibleNextMoves.Where(move => (move.XValue%2 == 1) || (move.YValue%2 == 1));
+
+			if(sides.Any())
+			{
+				var side = sides.First();
+				Play(side.XValue, side.YValue, game);
+			}
 		}
 
 		static bool OpponentPlayedEdge(IEnumerable<Coordinate> opponentMoves)
