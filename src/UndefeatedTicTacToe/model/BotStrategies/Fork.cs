@@ -5,7 +5,9 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 {
 	public class Fork
 	{
-		public static bool Exists(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, out Coordinate coordinate)
+		public static bool Exists(IEnumerable<Coordinate> movesMade,
+			IEnumerable<Coordinate> possibleNextMoves, Game game, Bot bot,
+			out Coordinate coordinate)
 		{
 			coordinate = null;
 
@@ -14,7 +16,7 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 
 			foreach (Coordinate move in possibleNextMoves)
 			{
-                //check for corners
+				//check for corners
 				if (((move.XValue % 2) == 0) && ((move.YValue % 2) == 0))
 					corners.Add(move);
 				else
@@ -25,21 +27,28 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 			{
 				foreach (Coordinate side in sides)
 				{
-					if(corner.XValue == side.XValue || corner.YValue == side.YValue)
+					if (corner.XValue == side.XValue || corner.YValue == side.YValue)
 					{
 						Coordinate currentCorner = corner;
-
+						Coordinate currentSide = side;
 						var thirdEmptyQuery =
 							possibleNextMoves.Where
 								(c => (c.XValue == currentCorner.XValue || c.YValue == currentCorner.YValue)
-								&& (c != currentCorner));
+								&& (c != currentCorner) && (c != currentSide));
 
-						var thirdBotQuery =
+						var relatedMovesMade =
 							movesMade.Where
 								(c => (c.XValue == currentCorner.XValue || c.YValue == currentCorner.YValue)
-								&& (c != currentCorner));
+								&& (c != currentCorner) && (c != currentSide));
 
-						if (thirdBotQuery.Any() || thirdEmptyQuery.Any())
+						bool relatedMovesMadeAreBots = true;
+
+						foreach (Coordinate move in relatedMovesMade)
+						{
+							relatedMovesMadeAreBots &= (game.Board[move.XValue, move.YValue] == bot);
+						}
+
+						if (thirdEmptyQuery.Any() && relatedMovesMadeAreBots)
 						{
 							coordinate = corner;
 							return true;

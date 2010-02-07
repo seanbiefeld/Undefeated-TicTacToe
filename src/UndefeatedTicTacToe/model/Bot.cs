@@ -17,8 +17,9 @@ namespace UndefeatedTicTacToe.model
 		public void MakeMove(Game game)
 		{
 			IEnumerable<Coordinate> opponentMoves = GetOpponentsMoves(game);
-			IEnumerable<Coordinate> movesMade = GetMovesMade(game);
+			IEnumerable<Coordinate> myMovesMade = GetMyMovesMade(game);
 			IEnumerable<Coordinate> possibleNextMoves = GetNextPossibleMoves(game);
+			IEnumerable<Coordinate> allMovesMade = myMovesMade.Concat(opponentMoves);
 			
 			if(MovesPlayed == 0)
 			{
@@ -35,23 +36,34 @@ namespace UndefeatedTicTacToe.model
 					PlayCenter(game);
 			}
 			else
-				PlayBestMove(movesMade, opponentMoves, possibleNextMoves, game);
+				PlayBestMove(myMovesMade, opponentMoves, possibleNextMoves,allMovesMade, game);
 
 			MovesPlayed++;
 		}
 
-		void PlayBestMove(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> opponentMovesMade, IEnumerable<Coordinate> possibleNextMoves, Game game)
+		void PlayBestMove(IEnumerable<Coordinate> myMovesMade,
+			IEnumerable<Coordinate> opponentMovesMade,
+			IEnumerable<Coordinate> possibleNextMoves,
+			IEnumerable<Coordinate> allMovesMade,
+			Game game)
 		{
 			int? nextXValue;
 			int? nextYValue;
 			Coordinate coordinate;
 
-			if (TwoInARow.Exist(movesMade, possibleNextMoves, out nextXValue, out nextYValue))
+			if (TwoInARow.Exist(myMovesMade, possibleNextMoves, out nextXValue, out nextYValue))
 				Play(nextXValue.Value, nextYValue.Value, game);
-			else if(TwoInARow.Exist(opponentMovesMade, possibleNextMoves, out nextXValue, out nextYValue))
+			else if (TwoInARow.Exist(opponentMovesMade, possibleNextMoves, out nextXValue, out nextYValue))
 				Play(nextXValue.Value, nextYValue.Value, game);
-			else if(Fork.Exists(movesMade, possibleNextMoves, out coordinate))
+			else if (Fork.Exists(allMovesMade, possibleNextMoves,game, this, out coordinate))
 				Play(coordinate.XValue, coordinate.YValue, game);
+			else
+				PlayOpenCornerOrSide(possibleNextMoves, game);
+		}
+
+		void PlayOpenCornerOrSide(IEnumerable<Coordinate> possibleNextMoves, Game game)
+		{
+			throw new NotImplementedException();
 		}
 
 		static bool OpponentPlayedEdge(IEnumerable<Coordinate> opponentMoves)
@@ -83,7 +95,7 @@ namespace UndefeatedTicTacToe.model
 			return GetMoves(game, currentPlayer => currentPlayer == null);
 		}
 
-		IEnumerable<Coordinate> GetMovesMade(Game game)
+		IEnumerable<Coordinate> GetMyMovesMade(Game game)
 		{
 			return GetMoves(game, currentPlayer => (currentPlayer != null && currentPlayer == this));
 		}

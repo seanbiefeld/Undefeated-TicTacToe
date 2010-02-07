@@ -73,15 +73,27 @@ function toggleVisibility(id, description) {
         }</script>
   </head>
   <body>
-    <h1>UndefeatedTicTacToe.Specs&nbsp;&nbsp;&nbsp;&nbsp;</h1><span class="count"><h2>7 concerns, 28 contexts, 57 specifications </h2><br></span><hr>
+    <h1>UndefeatedTicTacToe.Specs&nbsp;&nbsp;&nbsp;&nbsp;</h1><span class="count"><h2>8 concerns, 29 contexts, 58 specifications, <span class="failure">3 failures</span> </h2><br></span><hr>
 <hr>
-<h2 class="concern">Bot fork strategy specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">2 contexts, 2 specifications</span></h3>
+<h2 class="concern">Bot fork strategy specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">2 contexts, 2 specifications, <span class="failure">2 failures</span></span></h3>
 
-<h3 class="context">when forking and inline unblocked corner is available&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification</span></h4><ul>	<li>should play the open corner</li>
+<h3 class="context">when forking and inline unblocked corner is available&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification, <span class="failure">1 failure</span></span></h4><ul>	<li>should play the open corner <div class="failure">&lt;--FAILED</div><br/><p class="exception_type">Machine.Specifications.ExceptionResult<pre class="exception_message">System.NotImplementedException: The method or operation is not implemented.
+   at UndefeatedTicTacToe.model.Bot.PlayOpenCornerOrSide(IEnumerable`1 possibleNextMoves, Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 66
+   at UndefeatedTicTacToe.model.Bot.PlayBestMove(IEnumerable`1 myMovesMade, IEnumerable`1 opponentMovesMade, IEnumerable`1 possibleNextMoves, IEnumerable`1 allMovesMade, Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 61
+   at UndefeatedTicTacToe.model.Bot.MakeMove(Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 39
+   at UndefeatedTicTacToe.Specs.BotSpecs.when_forking_and_inline_unblocked_corner_is_available.<.ctor>b__1() in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe.Specs\BotSpecs\ForkStrategySpecs.cs:line 23
+   at Machine.Specifications.Utility.RandomExtensionMethods.InvokeIfNotNull(Because because) in C:\Dev\mspec\Source\Machine.Specifications\Utility\RandomExtensionMethods.cs:line 21
+   at Machine.Specifications.Model.Context.EstablishContext() in C:\Dev\mspec\Source\Machine.Specifications\Model\Context.cs:line 57</pre></p></li>
 </ul>
 
 
-<h3 class="context">when forking and opposite unblocked corner is available&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification</span></h4><ul>	<li>should play the opposite corner</li>
+<h3 class="context">when forking and opposite unblocked corner is available&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification, <span class="failure">1 failure</span></span></h4><ul>	<li>should play the opposite corner <div class="failure">&lt;--FAILED</div><br/><p class="exception_type">Machine.Specifications.ExceptionResult<pre class="exception_message">System.NotImplementedException: The method or operation is not implemented.
+   at UndefeatedTicTacToe.model.Bot.PlayOpenCornerOrSide(IEnumerable`1 possibleNextMoves, Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 66
+   at UndefeatedTicTacToe.model.Bot.PlayBestMove(IEnumerable`1 myMovesMade, IEnumerable`1 opponentMovesMade, IEnumerable`1 possibleNextMoves, IEnumerable`1 allMovesMade, Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 61
+   at UndefeatedTicTacToe.model.Bot.MakeMove(Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 39
+   at UndefeatedTicTacToe.Specs.BotSpecs.when_forking_and_opposite_unblocked_corner_is_available.<.ctor>b__1() in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe.Specs\BotSpecs\ForkStrategySpecs.cs:line 43
+   at Machine.Specifications.Utility.RandomExtensionMethods.InvokeIfNotNull(Because because) in C:\Dev\mspec\Source\Machine.Specifications\Utility\RandomExtensionMethods.cs:line 21
+   at Machine.Specifications.Model.Context.EstablishContext() in C:\Dev\mspec\Source\Machine.Specifications\Model\Context.cs:line 57</pre></p></li>
 </ul>
 
 <hr>
@@ -146,6 +158,18 @@ function toggleVisibility(id, description) {
 
 
 <h3 class="context">when coordinates are negative&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification</span></h4><ul>	<li>should specify move is not valid</li>
+</ul>
+
+<hr>
+<h2 class="concern">Move strategy specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">1 context, 1 specification, <span class="failure">1 failure</span></span></h3>
+
+<h3 class="context">when the bot cannot win block fork and a corner is open&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification, <span class="failure">1 failure</span></span></h4><ul>	<li>should play the opposite corner <div class="failure">&lt;--FAILED</div><br/><p class="exception_type">Machine.Specifications.ExceptionResult<pre class="exception_message">System.NotImplementedException: The method or operation is not implemented.
+   at UndefeatedTicTacToe.model.Bot.PlayOpenCornerOrSide(IEnumerable`1 possibleNextMoves, Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 66
+   at UndefeatedTicTacToe.model.Bot.PlayBestMove(IEnumerable`1 myMovesMade, IEnumerable`1 opponentMovesMade, IEnumerable`1 possibleNextMoves, IEnumerable`1 allMovesMade, Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 61
+   at UndefeatedTicTacToe.model.Bot.MakeMove(Game game) in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe\model\Bot.cs:line 39
+   at UndefeatedTicTacToe.Specs.BotSpecs.when_the_bot_cannot_win_block_fork_and_a_corner_is_open.<.ctor>b__1() in c:\dev\Undefeated-TicTacToe\src\UndefeatedTicTacToe.Specs\BotSpecs\MoveStrategySpecs.cs:line 65
+   at Machine.Specifications.Utility.RandomExtensionMethods.InvokeIfNotNull(Because because) in C:\Dev\mspec\Source\Machine.Specifications\Utility\RandomExtensionMethods.cs:line 21
+   at Machine.Specifications.Model.Context.EstablishContext() in C:\Dev\mspec\Source\Machine.Specifications\Model\Context.cs:line 57</pre></p></li>
 </ul>
 
 <hr>
