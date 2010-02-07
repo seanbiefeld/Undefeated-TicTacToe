@@ -63,7 +63,14 @@ namespace UndefeatedTicTacToe.model
 
 		void PlayOpenCornerOrSide(IEnumerable<Coordinate> possibleNextMoves, Game game)
 		{
-			throw new NotImplementedException();
+			IEnumerable<Coordinate> corners = possibleNextMoves.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0));
+
+			if(corners.Any())
+			{
+				var corner = corners.First();
+				Play(corner.XValue, corner.YValue, game);
+			}
+
 		}
 
 		static bool OpponentPlayedEdge(IEnumerable<Coordinate> opponentMoves)
