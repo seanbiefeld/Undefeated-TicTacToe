@@ -27,7 +27,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
     }
 
 	[Subject("Bot fork strategy")]
-	public class when_forking_and_opposite_corner_unblocked_corner_is_available : ForkStrategySpecs
+	public class when_forking_and_opposite_unblocked_corner_is_available : ForkStrategySpecs
 	{
 		private Establish context = () =>
 		{

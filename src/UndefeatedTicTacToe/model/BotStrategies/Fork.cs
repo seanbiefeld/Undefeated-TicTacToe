@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace UndefeatedTicTacToe.model.BotStrategies
 {
 	public class Fork
 	{
-		public static bool Exists(IEnumerable<Coordinate> possibleNextMoves, out Coordinate coordinate)
+		public static bool Exists(IEnumerable<Coordinate> movesMade, IEnumerable<Coordinate> possibleNextMoves, out Coordinate coordinate)
 		{
 			coordinate = null;
 
@@ -26,8 +27,23 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 				{
 					if(corner.XValue == side.XValue || corner.YValue == side.YValue)
 					{
-						coordinate = corner;
-						return true;
+						Coordinate currentCorner = corner;
+
+						var thirdEmptyQuery =
+							possibleNextMoves.Where
+								(c => (c.XValue == currentCorner.XValue || c.YValue == currentCorner.YValue)
+								&& (c != currentCorner));
+
+						var thirdBotQuery =
+							movesMade.Where
+								(c => (c.XValue == currentCorner.XValue || c.YValue == currentCorner.YValue)
+								&& (c != currentCorner));
+
+						if (thirdBotQuery.Any() || thirdEmptyQuery.Any())
+						{
+							coordinate = corner;
+							return true;
+						}
 					}
 				}
 			}

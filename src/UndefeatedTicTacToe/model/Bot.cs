@@ -50,7 +50,7 @@ namespace UndefeatedTicTacToe.model
 				Play(nextXValue.Value, nextYValue.Value, game);
 			else if(TwoInARow.Exist(opponentMovesMade, possibleNextMoves, out nextXValue, out nextYValue))
 				Play(nextXValue.Value, nextYValue.Value, game);
-			else if(Fork.Exists(possibleNextMoves, out coordinate))
+			else if(Fork.Exists(movesMade, possibleNextMoves, out coordinate))
 				Play(coordinate.XValue, coordinate.YValue, game);
 		}
 
