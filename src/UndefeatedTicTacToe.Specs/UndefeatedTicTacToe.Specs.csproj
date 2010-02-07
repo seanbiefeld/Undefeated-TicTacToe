@@ -50,6 +50,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BotSpecs\ForkStrategySpecs.cs" />
     <Compile Include="BotSpecs\OpeningMoveSpecs.cs" />
     <Compile Include="BotSpecs\TwoInARowStrategySpecs.cs" />
     <Compile Include="GameSpecs\GameOverSpecs.cs" />
