@@ -44,13 +44,14 @@ namespace UndefeatedTicTacToe.model
 		{
 			int? nextXValue;
 			int? nextYValue;
+			Coordinate coordinate;
 
 			if (TwoInARow.Exist(movesMade, possibleNextMoves, out nextXValue, out nextYValue))
 				Play(nextXValue.Value, nextYValue.Value, game);
 			else if(TwoInARow.Exist(opponentMovesMade, possibleNextMoves, out nextXValue, out nextYValue))
 				Play(nextXValue.Value, nextYValue.Value, game);
-			else if(Fork.Exists(possibleNextMoves, out nextXValue, out nextYValue))
-				Play(nextXValue.Value, nextYValue.Value, game);
+			else if(Fork.Exists(possibleNextMoves, out coordinate))
+				Play(coordinate.XValue, coordinate.YValue, game);
 		}
 
 		static bool OpponentPlayedEdge(IEnumerable<Coordinate> opponentMoves)

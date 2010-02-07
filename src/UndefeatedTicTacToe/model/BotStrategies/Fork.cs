@@ -4,15 +4,35 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 {
 	public class Fork
 	{
-		public static bool Exists(IEnumerable<Coordinate> possibleNextMoves, out int? xValue, out int? yValue)
+		public static bool Exists(IEnumerable<Coordinate> possibleNextMoves, out Coordinate coordinate)
 		{
-			bool forkExists = false;
+			coordinate = null;
 
-			if (TwoInARow.Exist(possibleNextMoves, possibleNextMoves, out xValue, out yValue))
+			IList<Coordinate> corners = new List<Coordinate>();
+			IList<Coordinate> sides = new List<Coordinate>();
 
-			xValue = null;
-			yValue = null;
-			return forkExists;
+			foreach (Coordinate move in possibleNextMoves)
+			{
+                //check for corners
+				if (((move.XValue % 2) == 0) && ((move.YValue % 2) == 0))
+					corners.Add(move);
+				else
+					sides.Add(move);
+			}
+
+			foreach (Coordinate corner in corners)
+			{
+				foreach (Coordinate side in sides)
+				{
+					if(corner.XValue == side.XValue || corner.YValue == side.YValue)
+					{
+						coordinate = corner;
+						return true;
+					}
+				}
+			}
+
+			return false;
 		}
 	}
 }
