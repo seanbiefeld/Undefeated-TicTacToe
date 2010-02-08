@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UndefeatedTicTacToe", "Unde
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UndefeatedTicTacToe.Specs", "UndefeatedTicTacToe.Specs\UndefeatedTicTacToe.Specs.csproj", "{FF19E645-7A46-4294-9F10-7DF30AD1D6B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UndefeatedTicTacToe.ConsoleUI", "UndefeatedTicTacToe.ConsoleUI\UndefeatedTicTacToe.ConsoleUI.csproj", "{3E4E94FC-CAD9-4A7D-9F45-6283E552FFFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{FF19E645-7A46-4294-9F10-7DF30AD1D6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF19E645-7A46-4294-9F10-7DF30AD1D6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF19E645-7A46-4294-9F10-7DF30AD1D6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E4E94FC-CAD9-4A7D-9F45-6283E552FFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E4E94FC-CAD9-4A7D-9F45-6283E552FFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E4E94FC-CAD9-4A7D-9F45-6283E552FFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E4E94FC-CAD9-4A7D-9F45-6283E552FFFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
