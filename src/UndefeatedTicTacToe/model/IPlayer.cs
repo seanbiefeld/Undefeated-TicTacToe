@@ -2,6 +2,6 @@
 {
 	public interface IPlayer
 	{
-		void MakeMove(Game game);
+		void MakeMove(IGame game);
 	}
 }

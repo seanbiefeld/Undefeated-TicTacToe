@@ -57,8 +57,13 @@
     <Compile Include="GameSpecs\GameOverSpecs.cs" />
     <Compile Include="GameSpecs\NewGameSpecs.cs" />
     <Compile Include="GameSpecs\PlayMoveSpecs.cs" />
+    <Compile Include="UISpecs\ConsolePresenterSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\UndefeatedTicTacToe.ConsoleUI\UndefeatedTicTacToe.ConsoleUI.csproj">
+      <Project>{3E4E94FC-CAD9-4A7D-9F45-6283E552FFFA}</Project>
+      <Name>UndefeatedTicTacToe.ConsoleUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UndefeatedTicTacToe\UndefeatedTicTacToe.csproj">
       <Project>{9535796A-F0CD-453C-B466-895B5C8A3AC3}</Project>
       <Name>UndefeatedTicTacToe</Name>

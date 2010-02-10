@@ -12,7 +12,7 @@ namespace UndefeatedTicTacToe.Specs.GameSpecs
 
 		protected class TestablePlayer : IPlayer
 		{
-			public void MakeMove(Game game)
+			public void MakeMove(IGame game)
 			{
 				
 			}

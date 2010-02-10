@@ -47,6 +47,7 @@
     <Compile Include="model\BotStrategies\TwoInARow.cs" />
     <Compile Include="model\Coordinate.cs" />
     <Compile Include="model\Game.cs" />
+    <Compile Include="model\IGame.cs" />
     <Compile Include="model\IPlayer.cs" />
   </ItemGroup>
   <ItemGroup>

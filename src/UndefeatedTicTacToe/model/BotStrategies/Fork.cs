@@ -6,7 +6,7 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 	public class Fork
 	{
 		public static bool Exists(IEnumerable<Coordinate> movesMade,
-			IEnumerable<Coordinate> possibleNextMoves, Game game, Bot bot,
+			IEnumerable<Coordinate> possibleNextMoves, IGame game, Bot bot,
 			out Coordinate coordinate)
 		{
 			coordinate = null;

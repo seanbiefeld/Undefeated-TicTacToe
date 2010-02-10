@@ -21,7 +21,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 			}
 		}
 
-		protected static Game _game;
+		protected static IGame _game;
 		protected static TestableBot _bot;
 		protected static IPlayer _opponent;
 		protected static int _numberOfMoves;

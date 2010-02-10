@@ -1,18 +1,18 @@
 ﻿namespace UndefeatedTicTacToe.model
 {
-	public class Game
+	public class Game : IGame
 	{
 		protected IPlayer SomePlayer { get; set; }
 		protected IPlayer SomeOtherPlayer { get; set; }
 		public virtual IPlayer[,] Board { get; protected set; }
-		public virtual bool Over{ get; set; }
+		public virtual bool Over{ get; protected set; }
 		protected IPlayer NextPlayer { get; set; }
 		public IPlayer Winner { get; protected set; }
 		public IPlayer Loser { get; protected set; }
 		public bool Draw { get; protected set; }
-		public static readonly int BoardWidth = 3;
-		public static readonly int BoardLength = 3;
-
+		public int BoardWidth { get { return 3; } }
+		public int BoardLength { get { return 3; } }
+		
 		public Game(IPlayer someIPlayer, IPlayer someOtherIPlayer, IPlayer firstIPlayer)
 		{
 			Board = new IPlayer[BoardWidth, BoardLength];

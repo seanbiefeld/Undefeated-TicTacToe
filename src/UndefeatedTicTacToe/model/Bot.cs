@@ -14,7 +14,7 @@ namespace UndefeatedTicTacToe.model
 			MovesPlayed = 0;
 		}
 
-		public void MakeMove(Game game)
+		public void MakeMove(IGame game)
 		{
 			IEnumerable<Coordinate> opponentMoves = GetOpponentsMoves(game);
 			IEnumerable<Coordinate> myMovesMade = GetMyMovesMade(game);
@@ -45,7 +45,7 @@ namespace UndefeatedTicTacToe.model
 			IEnumerable<Coordinate> opponentMovesMade,
 			IEnumerable<Coordinate> possibleNextMoves,
 			IEnumerable<Coordinate> allMovesMade,
-			Game game)
+			IGame game)
 		{
 			int? nextXValue;
 			int? nextYValue;
@@ -61,7 +61,7 @@ namespace UndefeatedTicTacToe.model
 				PlayOpenCornerOrSide(possibleNextMoves, game);
 		}
 
-		void PlayOpenCornerOrSide(IEnumerable<Coordinate> possibleNextMoves, Game game)
+		void PlayOpenCornerOrSide(IEnumerable<Coordinate> possibleNextMoves, IGame game)
 		{
 			IEnumerable<Coordinate> corners = possibleNextMoves.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0));
 
@@ -104,28 +104,28 @@ namespace UndefeatedTicTacToe.model
 			return false;
 		}
 
-		static IEnumerable<Coordinate> GetNextPossibleMoves(Game game)
+		static IEnumerable<Coordinate> GetNextPossibleMoves(IGame game)
 		{
 			return GetMoves(game, currentPlayer => currentPlayer == null);
 		}
 
-		IEnumerable<Coordinate> GetMyMovesMade(Game game)
+		IEnumerable<Coordinate> GetMyMovesMade(IGame game)
 		{
 			return GetMoves(game, currentPlayer => (currentPlayer != null && currentPlayer == this));
 		}
 
-		IEnumerable<Coordinate> GetOpponentsMoves(Game game)
+		IEnumerable<Coordinate> GetOpponentsMoves(IGame game)
 		{
 			return GetMoves(game, currentPlayer => (currentPlayer != null && currentPlayer != this));
 		}
 
-		static IEnumerable<Coordinate> GetMoves(Game game, Predicate<IPlayer> logicToDetermineIfMoveIsAdded)
+		static IEnumerable<Coordinate> GetMoves(IGame game, Predicate<IPlayer> logicToDetermineIfMoveIsAdded)
 		{
 			IList<Coordinate> moves = new List<Coordinate>();
 
-			for (int i = 0; i < Game.BoardWidth; i++)
+			for (int i = 0; i < game.BoardWidth; i++)
 			{
-				for (int j = 0; j < Game.BoardLength; j++)
+				for (int j = 0; j < game.BoardLength; j++)
 				{
 					IPlayer playerInCurrentCell = game.Board[i, j];
 
@@ -137,17 +137,17 @@ namespace UndefeatedTicTacToe.model
 			return moves;
 		}
 
-		void PlayDefaultCorner(Game game)
+		void PlayDefaultCorner(IGame game)
 		{
 			Play(0,2, game);
 		}
 
-		void PlayCenter(Game game)
+		void PlayCenter(IGame game)
 		{
 			Play(1,1,game);
 		}
 
-		void Play(int xcoordinate, int ycoordinate, Game game)
+		void Play(int xcoordinate, int ycoordinate, IGame game)
 		{
 			game.PlayMove(xcoordinate, ycoordinate, this);
 			game.EndTurn();
