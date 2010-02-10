@@ -10,8 +10,7 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 		(
 			IEnumerable<Coordinate> movesMade,
 			IEnumerable<Coordinate> possibleNextMoves,
-			out int? xCoordinate,
-			out int? yCoordinate
+			out Coordinate coordinate
 		)
 		{
 			for (int i = 0; i < 3; i++)
@@ -21,9 +20,8 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 				if (VerticalOrHorizontalThreeInARowIsPossible
 					(move=>move.YValue == yValue,
 					movesMade, 
-					possibleNextMoves, 
-					out xCoordinate, 
-					out yCoordinate))
+					possibleNextMoves,
+					out coordinate))
 					return true;
 
 				//check vertical moves
@@ -32,8 +30,7 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 					(move => move.XValue == xValue,
 					movesMade,
 					possibleNextMoves, 
-					out xCoordinate, 
-					out yCoordinate))
+					out coordinate))
 					return true;
 			}
 
@@ -48,8 +45,7 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 				(bottomRightToTopLeftChecks, 
 				movesMade, 
 				possibleNextMoves, 
-				out xCoordinate, 
-				out yCoordinate))
+				out coordinate))
 				return true;
 
 			Dictionary<Coordinate, bool> bottomLeftToTopRightChecks = new Dictionary<Coordinate, bool>
@@ -63,12 +59,10 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 				(bottomLeftToTopRightChecks, 
 				movesMade, 
 				possibleNextMoves, 
-				out xCoordinate, 
-				out yCoordinate))
+				out coordinate))
 				return true;
 
-			xCoordinate = null;
-			yCoordinate = null;
+			coordinate = null;
 			return false;
 		}
 
@@ -77,8 +71,7 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 			Func<Coordinate, bool> coordinateCheck, 
 			IEnumerable<Coordinate> movesMade, 
 			IEnumerable<Coordinate> possibleNextMoves, 
-			out int? xCoordinate, 
-			out int? yCoordinate
+			out Coordinate coordinate
 		)
 		{
 			if (movesMade.Where(coordinateCheck).Count() == 2)
@@ -88,14 +81,12 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 				if (results.Any())
 				{
 					var nextMove = results.First();
-					xCoordinate = nextMove.XValue;
-					yCoordinate = nextMove.YValue;
+					coordinate = new Coordinate(nextMove.XValue, nextMove.YValue);
 					return true;
 				}
 			}
 
-			xCoordinate = null;
-			yCoordinate = null;
+			coordinate = null;
 			return false;
 		}
 
@@ -103,16 +94,15 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 		(
 			Dictionary<Coordinate, bool> checks, 
 			IEnumerable<Coordinate> movesMade, 
-			IEnumerable<Coordinate> possibleNextMoves, 
-			out int? xCoordinate, 
-			out int? yCoordinate
+			IEnumerable<Coordinate> possibleNextMoves,
+			out Coordinate coordinateToWin
 		)
 		{
 			var coordinates = checks.Keys.ToArray();
 
-			foreach (Coordinate coordinate in coordinates)
+			foreach (Coordinate coord in coordinates)
 			{
-				Coordinate currentCoordinate = coordinate;
+				Coordinate currentCoordinate = coord;
 
 				if (movesMade.Where(move => move.XValue == currentCoordinate.XValue
 				&& move.YValue == currentCoordinate.YValue).Any())
@@ -129,15 +119,13 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 
 					if (possibleNextMoves.Contains(coordinateToPlay))
 					{
-						xCoordinate = coordinateToPlay.XValue;
-						yCoordinate = coordinateToPlay.YValue;
+						coordinateToWin = new Coordinate(coordinateToPlay.XValue, coordinateToPlay.YValue);
 						return true;
 					}
 				}
 			}
 
-			xCoordinate = null;
-			yCoordinate = null;
+			coordinateToWin = null;
 			return false;
 		}
 
