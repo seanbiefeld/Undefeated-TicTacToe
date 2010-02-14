@@ -57,7 +57,6 @@
     <Compile Include="GameSpecs\GameOverSpecs.cs" />
     <Compile Include="GameSpecs\NewGameSpecs.cs" />
     <Compile Include="GameSpecs\PlayMoveSpecs.cs" />
-    <Compile Include="UISpecs\ConsolePresenterSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UndefeatedTicTacToe.ConsoleUI\UndefeatedTicTacToe.ConsoleUI.csproj">

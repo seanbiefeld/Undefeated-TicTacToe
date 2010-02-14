@@ -37,7 +37,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 		protected class it_incremented_the_number_of_moves_played_by_one : MoveContext
 		{
 			It should_increment_the_number_of_moves_made_by_one = () =>
-				_bot.TestableMovesPlayed.ShouldEqual(_numberOfMoves+1);
+				_bot.TestableMovesPlayed.ShouldEqual(_numberOfMoves);
 		}
 	}
 
@@ -49,8 +49,6 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 
 		It should_play_top_left_corner = () =>
 			_game.Board[0,2].ShouldEqual(_bot);
-
-		Behaves_like<it_incremented_the_number_of_moves_played_by_one> should_increment_the_number_of_moves_made_by_one;
 	}
 
 	[Subject("Opening Move")]
@@ -67,8 +65,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 
 		It should_play_the_center = () =>
 			_game.Board[1, 1].ShouldEqual(_bot);
-
-		Behaves_like<it_incremented_the_number_of_moves_played_by_one> should_increment_the_number_of_moves_made_by_one;
+		
 	}
 
 	[Subject("Opening Move")]
@@ -85,8 +82,6 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 
 		It should_play_the_corner = () =>
 			_game.Board[0, 2].ShouldEqual(_bot);
-
-		Behaves_like<it_incremented_the_number_of_moves_played_by_one> should_increment_the_number_of_moves_made_by_one;
 	}
 
 	[Subject("Opening Move")]
@@ -104,6 +99,5 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 		It should_play_the_center = () =>
 			_game.Board[1,1].ShouldEqual(_bot);
 
-		Behaves_like<it_incremented_the_number_of_moves_played_by_one> should_increment_the_number_of_moves_made_by_one;
 	}
 }

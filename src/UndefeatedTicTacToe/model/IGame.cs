@@ -1,4 +1,6 @@
-﻿namespace UndefeatedTicTacToe.model
+﻿using System;
+
+namespace UndefeatedTicTacToe.model
 {
 	public interface IGame
 	{
@@ -11,5 +13,7 @@
 		int BoardLength { get; }
 		void EndTurn();
 		bool PlayMove(int xCoordinate, int yCoordinate, IPlayer currentIPlayer);
+		event Action<IGame> GameOverEvent;
+		bool MoveIsValid(int xCoordinate, int yCoordinate);
 	}
 }

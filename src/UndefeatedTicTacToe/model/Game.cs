@@ -1,4 +1,6 @@
-﻿namespace UndefeatedTicTacToe.model
+﻿using System;
+
+namespace UndefeatedTicTacToe.model
 {
 	public class Game : IGame
 	{
@@ -12,15 +14,27 @@
 		public bool Draw { get; protected set; }
 		public int BoardWidth { get { return 3; } }
 		public int BoardLength { get { return 3; } }
-		
-		public Game(IPlayer someIPlayer, IPlayer someOtherIPlayer, IPlayer firstIPlayer)
+
+		public Game(IPlayer someIPlayer, IPlayer someOtherIPlayer, IPlayer firstIPlayer, Action<IGame> gameOverHandler)
 		{
+			ConstructGame(gameOverHandler, someIPlayer, someOtherIPlayer, firstIPlayer);
+		}
+
+		void ConstructGame(Action<IGame> gameOverHandler, IPlayer someIPlayer, IPlayer someOtherIPlayer, IPlayer firstIPlayer)
+		{
+			GameOverEvent += gameOverHandler;
+
 			Board = new IPlayer[BoardWidth, BoardLength];
 			SomePlayer = someIPlayer;
 			SomeOtherPlayer = someOtherIPlayer;
 			NextPlayer = firstIPlayer;
 
 			NextPlayer.MakeMove(this);
+		}
+
+		public Game(IPlayer someIPlayer, IPlayer someOtherIPlayer, IPlayer firstIPlayer)
+		{
+			ConstructGame(null, someIPlayer, someOtherIPlayer, firstIPlayer);
 		}
 
 		public virtual void EndTurn()
@@ -120,7 +134,19 @@
 			{
 				Over = true;
 				Draw = true;
+				
+				if (GameOverEvent!= null)
+					GameOverEvent(this);
 			}
+		}
+
+		public event Action<IGame> GameOverEvent;
+		
+		public bool MoveIsValid(int xCoordinate, int yCoordinate)
+		{
+			var position = Board[xCoordinate, yCoordinate];
+
+			return (position == null);
 		}
 
 		void GameOver(IPlayer currentIPlayer)
@@ -128,6 +154,8 @@
 			Winner = currentIPlayer;
 			Loser = GetOpponent(currentIPlayer);
 			Over = true;
+			if (GameOverEvent != null)
+				GameOverEvent(this);
 		}
 
 		IPlayer GetOpponent(IPlayer currentIPlayer)

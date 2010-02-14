@@ -37,8 +37,6 @@ namespace UndefeatedTicTacToe.model
 			}
 			else
 				PlayBestMove(myMovesMade, opponentMoves, possibleNextMoves,allMovesMade, game);
-
-			MovesPlayed++;
 		}
 
 		void PlayBestMove(IEnumerable<Coordinate> myMovesMade,
@@ -137,18 +135,23 @@ namespace UndefeatedTicTacToe.model
 
 		void PlayDefaultCorner(IGame game)
 		{
+			MovesPlayed++;
 			Play(0,2, game);
 		}
 
 		void PlayCenter(IGame game)
 		{
+			MovesPlayed++;
 			Play(1,1,game);
 		}
 
 		void Play(int xcoordinate, int ycoordinate, IGame game)
 		{
-			game.PlayMove(xcoordinate, ycoordinate, this);
-			game.EndTurn();
+			if (game.PlayMove(xcoordinate, ycoordinate, this))
+			{
+				MovesPlayed++;
+				game.EndTurn();
+			}
 		}
 	}
 }
