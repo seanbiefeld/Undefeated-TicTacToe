@@ -11,40 +11,6 @@ namespace UndefeatedTicTacToe.Specs.UISpecs
 		protected static TestConsolePresenter _presenter;
 	}
 
-	public class ConsolePresenter
-	{
-		readonly IConsoleView _view;
-		readonly Bot _bot;
-		readonly IPlayer _player;
-		readonly string PlayerName = "me";
-		readonly string BotName = "bot";
-
-		protected Game CurrentGame { get; set; }
-
-		public ConsolePresenter(IConsoleView view)
-		{
-			_view = view;
-			_bot = new Bot();
-			_player = new Player();
-		}
-
-		public void Initialize(string firstPlayerName)
-		{
-			if (firstPlayerName.ToLower() == PlayerName.ToLower())
-				NewGame(_player, _bot, _player);
-			else if (firstPlayerName.ToLower() == BotName.ToLower())
-				NewGame(_bot, _player, _bot);
-			else
-				_view.ShowSpecifyUserMessage();
-		}
-
-		void NewGame(IPlayer somePlayer, IPlayer someOtherPlayer, IPlayer firstPlayer)
-		{
-			CurrentGame = new Game(somePlayer, someOtherPlayer, firstPlayer);
-			_view.GameOver = CurrentGame.Over;
-		}
-	}
-
 	public class TestConsolePresenter : ConsolePresenter
 	{
 		public TestConsolePresenter(IConsoleView view) : base(view)
@@ -62,12 +28,6 @@ namespace UndefeatedTicTacToe.Specs.UISpecs
 				CurrentGame = value;
 			}
 		}
-	}
-
-	public interface IConsoleView
-	{
-		void ShowSpecifyUserMessage();
-		bool GameOver { get; set; }
 	}
 
 	[Subject("UI Console")]
@@ -102,5 +62,44 @@ namespace UndefeatedTicTacToe.Specs.UISpecs
 
 		It should_not_create_a_game = () => 
 			_presenter.TestableCurrentGame.ShouldBeNull();
+
+		It should_validate_name = () => 
+			_view.ValidFirstPlayer.ShouldBeFalse();
+	}
+
+	[Subject("UI Console")]
+	public class when_the_game_begins_and_the_player_is_specified : ConsolePresenterContext
+	{
+		Establish context = () =>
+		{
+			_view = MockRepository.GenerateStub<IConsoleView>();
+			_presenter = new TestConsolePresenter(_view);
+		};
+
+		Because of = () => _presenter.Initialize("me");
+
+		It should_create_the_game = () =>
+			_presenter.TestableCurrentGame.ShouldNotBeNull();
+
+		It should_validate_name = () =>
+			_view.ValidFirstPlayer.ShouldBeTrue();
+	}
+
+	[Subject("UI Console")]
+	public class when_the_game_begins_and_the_bot_is_specified : ConsolePresenterContext
+	{
+		Establish context = () =>
+		{
+			_view = MockRepository.GenerateStub<IConsoleView>();
+			_presenter = new TestConsolePresenter(_view);
+		};
+
+		Because of = () => _presenter.Initialize("bot");
+
+		It should_create_the_game = () =>
+			_presenter.TestableCurrentGame.ShouldNotBeNull();
+
+		It should_validate_name = () =>
+			_view.ValidFirstPlayer.ShouldBeTrue();
 	}
 }

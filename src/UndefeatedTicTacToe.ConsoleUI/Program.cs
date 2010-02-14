@@ -1,29 +1,52 @@
 ﻿using System;
-using UndefeatedTicTacToe.model;
 
 namespace UndefeatedTicTacToe.ConsoleUI
 {
-	class Program
+	public class Program
 	{
+		public static ConsoleView View { get; set; }
+
 		static void Main()
 		{
-			Player player = new Player();
-			Bot bot = new Bot();
-
-			Game game = new Game(player, bot, player);
-			
-			while (!game.Over)
-			{
-				Console.Write(BoadBuilder.Build(game.Board));
-			}
+			View = new ConsoleView();
 		}
 	}
 
-	internal static class BoadBuilder
+	public class ConsoleView : IConsoleView
 	{
-		public static string Build(IPlayer[,] board)
+		public static ConsolePresenter Presenter
 		{
-			return string.Empty;
+			get;
+			set;
+		}
+
+		public ConsoleView()
+		{
+			Presenter = new ConsolePresenter(this);
+
+			Console.WriteLine("Please provide first player's name");
+
+			while (!ValidFirstPlayer)
+			{
+				string firstPlayer = Console.ReadLine();
+
+				Presenter.Initialize(firstPlayer);
+			}
+		}
+
+		public void ShowSpecifyUserMessage()
+		{
+			Console.WriteLine("You must specify user who goes first \"me\" or \"bot\"");
+		}
+
+		public bool GameOver
+		{
+			get; set;
+		}
+
+		public bool ValidFirstPlayer
+		{
+			get; set;
 		}
 	}
 }
