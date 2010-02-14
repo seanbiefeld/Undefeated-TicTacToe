@@ -73,7 +73,7 @@ function toggleVisibility(id, description) {
         }</script>
   </head>
   <body>
-    <h1>UndefeatedTicTacToe.Specs&nbsp;&nbsp;&nbsp;&nbsp;</h1><span class="count"><h2>9 concerns, 32 contexts, 62 specifications </h2><br></span><hr>
+    <h1>UndefeatedTicTacToe.Specs&nbsp;&nbsp;&nbsp;&nbsp;</h1><span class="count"><h2>9 concerns, 34 contexts, 67 specifications </h2><br></span><hr>
 <hr>
 <h2 class="concern">Bot fork strategy specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">2 contexts, 2 specifications</span></h3>
 
@@ -240,14 +240,25 @@ function toggleVisibility(id, description) {
 </ul>
 
 <hr>
-<h2 class="concern">UI Console specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">2 contexts, 3 specifications</span></h3>
+<h2 class="concern">UI Console specifications&nbsp;&nbsp;&nbsp;&nbsp;</h2><h3><span class="count">4 contexts, 8 specifications</span></h3>
 
 <h3 class="context">when the game begins&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">1 specification</span></h4><ul>	<li>should set game over to false</li>
 </ul>
 
 
-<h3 class="context">when the game begins and no valid first player is specified&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">2 specifications</span></h4><ul>	<li>should notify the user to specify a valid user</li>
+<h3 class="context">when the game begins and no valid first player is specified&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">3 specifications</span></h4><ul>	<li>should notify the user to specify a valid user</li>
 	<li>should not create a game</li>
+	<li>should validate name</li>
+</ul>
+
+
+<h3 class="context">when the game begins and the bot is specified&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">2 specifications</span></h4><ul>	<li>should create the game</li>
+	<li>should validate name</li>
+</ul>
+
+
+<h3 class="context">when the game begins and the player is specified&nbsp;&nbsp;&nbsp;&nbsp;</h3><h4><span class="count">2 specifications</span></h4><ul>	<li>should create the game</li>
+	<li>should validate name</li>
 </ul>
 
 <hr>
