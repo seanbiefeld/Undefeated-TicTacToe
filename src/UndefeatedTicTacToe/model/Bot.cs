@@ -19,7 +19,6 @@ namespace UndefeatedTicTacToe.model
 			IEnumerable<Coordinate> opponentMoves = GetOpponentsMoves(game);
 			IEnumerable<Coordinate> myMovesMade = GetMyMovesMade(game);
 			IEnumerable<Coordinate> possibleNextMoves = GetNextPossibleMoves(game);
-			IEnumerable<Coordinate> allMovesMade = myMovesMade.Concat(opponentMoves);
 			
 			if(MovesPlayed == 0)
 			{
@@ -36,13 +35,12 @@ namespace UndefeatedTicTacToe.model
 					PlayCenter(game);
 			}
 			else
-				PlayBestMove(myMovesMade, opponentMoves, possibleNextMoves,allMovesMade, game);
+				PlayBestMove(myMovesMade, opponentMoves, possibleNextMoves, game);
 		}
 
 		void PlayBestMove(IEnumerable<Coordinate> myMovesMade,
 			IEnumerable<Coordinate> opponentMovesMade,
 			IEnumerable<Coordinate> possibleNextMoves,
-			IEnumerable<Coordinate> allMovesMade,
 			IGame game)
 		{
 			Coordinate coordinate;
@@ -51,9 +49,7 @@ namespace UndefeatedTicTacToe.model
 				Play(coordinate.XValue, coordinate.YValue, game);
 			else if (TwoInARow.Exist(opponentMovesMade, possibleNextMoves, out coordinate))
 				Play(coordinate.XValue, coordinate.YValue, game);
-			else if (Fork.ExistsForOpponent(opponentMovesMade, possibleNextMoves, out coordinate))
-				Play(coordinate.XValue, coordinate.YValue, game);
-			else if (Fork.Exists(allMovesMade, possibleNextMoves,game, this, out coordinate))
+			else if (Fork.ExistsForOpponent(opponentMovesMade, myMovesMade, possibleNextMoves, out coordinate))
 				Play(coordinate.XValue, coordinate.YValue, game);
 			else
 				PlayOpenCornerOrSide(possibleNextMoves, game);
