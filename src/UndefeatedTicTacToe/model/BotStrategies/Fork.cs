@@ -59,5 +59,36 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 
 			return false;
 		}
+
+		public static bool ExistsForOpponent(IEnumerable<Coordinate> opponentMoves,
+			IEnumerable<Coordinate> possibleNextMoves, out Coordinate coordinate)
+		{
+			coordinate = null;
+
+			int? xValue = null;
+			int? yValue = null;
+
+			foreach (Coordinate move in possibleNextMoves)
+			{
+				foreach (Coordinate opponentMove in opponentMoves)
+				{
+					if (move.XValue == opponentMove.XValue)
+						xValue = move.XValue;
+					if (move.YValue == opponentMove.YValue)
+						yValue = move.YValue;
+				}
+			}
+
+			if(xValue.HasValue && yValue.HasValue)
+			{
+				if (possibleNextMoves.Where(move => move.XValue == xValue.Value && move.YValue == yValue.Value).Any())
+				{
+					coordinate = new Coordinate(xValue.Value, yValue.Value);
+					return true;
+				}
+			}
+
+			return false;
+		}
 	}
 }

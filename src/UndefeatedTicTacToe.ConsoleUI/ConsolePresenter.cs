@@ -93,6 +93,8 @@ namespace UndefeatedTicTacToe.ConsoleUI
 
 		void GameOverHandler(IGame game)
 		{
+			_view.ShowBoard(game.Board);
+
 			if (game.Over && !game.Draw)
 				_view.ShowGameOverMessage(game);
 			else

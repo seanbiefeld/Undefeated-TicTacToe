@@ -51,6 +51,8 @@ namespace UndefeatedTicTacToe.model
 				Play(coordinate.XValue, coordinate.YValue, game);
 			else if (TwoInARow.Exist(opponentMovesMade, possibleNextMoves, out coordinate))
 				Play(coordinate.XValue, coordinate.YValue, game);
+			else if (Fork.ExistsForOpponent(opponentMovesMade, possibleNextMoves, out coordinate))
+				Play(coordinate.XValue, coordinate.YValue, game);
 			else if (Fork.Exists(allMovesMade, possibleNextMoves,game, this, out coordinate))
 				Play(coordinate.XValue, coordinate.YValue, game);
 			else
@@ -61,15 +63,15 @@ namespace UndefeatedTicTacToe.model
 		{
 			IEnumerable<Coordinate> corners = possibleNextMoves.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0));
 
-			if(corners.Any())
+			if (corners.Any())
 			{
 				var corner = corners.First();
 				Play(corner.XValue, corner.YValue, game);
 			}
 
-			IEnumerable<Coordinate> sides = possibleNextMoves.Where(move => (move.XValue%2 == 1) || (move.YValue%2 == 1));
+			IEnumerable<Coordinate> sides = possibleNextMoves.Where(move => (move.XValue % 2 == 1) || (move.YValue % 2 == 1));
 
-			if(sides.Any())
+			if (sides.Any())
 			{
 				var side = sides.First();
 				Play(side.XValue, side.YValue, game);

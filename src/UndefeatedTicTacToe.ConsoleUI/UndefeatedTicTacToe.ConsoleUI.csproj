@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsolePresenter.cs" />
+    <Compile Include="ConsoleView.cs" />
     <Compile Include="IConsoleView.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
