@@ -52,8 +52,8 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 		private Because of = () =>
 			_bot.MakeMove(_game);
 
-		private It should_play_the_open_side = () =>
-			_game.AssertWasCalled(game => game.PlayMove(2, 1, _bot));
+		private It should_play_the_open_corner = () =>
+			_game.AssertWasCalled(game => game.PlayMove(2, 0, _bot));
 	}
 
 	[Subject("Move strategy")]

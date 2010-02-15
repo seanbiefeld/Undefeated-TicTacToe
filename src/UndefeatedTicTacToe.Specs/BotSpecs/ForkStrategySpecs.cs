@@ -23,7 +23,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 			_bot.MakeMove(_game);
 
         private It should_block_fork = () =>
-			_game.AssertWasCalled(game => game.PlayMove(2, 1, _bot));
+			_game.AssertWasCalled(game => game.PlayMove(2, 2, _bot));
     }
 
 	[Subject("Bot fork strategy")]
@@ -42,7 +42,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 			_bot.MakeMove(_game);
 
 		private It should_block_fork = () =>
-			_game.AssertWasCalled(game => game.PlayMove(2, 2, _bot));
+			_game.AssertWasCalled(game => game.PlayMove(0, 0, _bot));
 	}
 	
 }

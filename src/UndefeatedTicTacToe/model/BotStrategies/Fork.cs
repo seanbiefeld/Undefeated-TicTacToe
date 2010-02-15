@@ -10,37 +10,33 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 		{
 			coordinate = null;
 
-			Coordinate greatestOpponentCoord = opponentMoves.OrderByDescending(move => move.XValue).First();
+			IEnumerable<Coordinate> cornerMoves = possibleNextMoves.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0));
+			IEnumerable<Coordinate> opponentSideMoves = opponentMoves.Where(move => (move.XValue%2 == 1) || (move.YValue%2 == 1));
 
-			IEnumerable<Coordinate> movesToMake = possibleNextMoves.Where(move => move.XValue >= greatestOpponentCoord.XValue);
-			IEnumerable<Coordinate> sides = movesToMake.Where(move => (move.XValue % 2 == 1) || (move.YValue % 2 == 1)).OrderByDescending(move=>move.XValue);
-			IEnumerable<Coordinate> corners = movesToMake.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0)).OrderByDescending(move => move.XValue);
-
-			if (opponentMoves.Where(move => move.XValue == 1 && move.YValue == 1).Any())
+			//try to find corners on same y axis
+			foreach (Coordinate opponentSideMove in opponentSideMoves)
 			{
-				if (corners.Any())
+				foreach (Coordinate cornerMove in cornerMoves)
 				{
-					coordinate = corners.First();
-					return true;
-				}
-			}
-			else
-			{
-				if (sides.Any())
-				{
-					coordinate = sides.First();
-					return true;
+					if(cornerMove.YValue == opponentSideMove.YValue)
+					{
+						coordinate = cornerMove;
+						return true;
+					}
 				}
 			}
 
-			if(movesToMake.Any())
+			//try to find corners on same x axis
+			foreach (Coordinate opponentSideMove in opponentSideMoves)
 			{
-				coordinate =
-					possibleNextMoves
-						.Where(move => (move.XValue%2 == 0) || (move.YValue%2 == 0))
-						.OrderBy(move => move.XValue)
-						.First();
-				return true;
+				foreach (Coordinate cornerMove in cornerMoves)
+				{
+					if (cornerMove.XValue == opponentSideMove.XValue)
+					{
+						coordinate = cornerMove;
+						return true;
+					}
+				}
 			}
 
 			return false;
