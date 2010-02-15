@@ -8,7 +8,7 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
     }
 
     [Subject("Bot fork strategy")]
-    public class when_blocking_opponents_edge_fork : ForkStrategySpecs
+    public class when_blocking_non_center_fork : ForkStrategySpecs
     {
         private Establish context = () =>
         {
@@ -23,11 +23,11 @@ namespace UndefeatedTicTacToe.Specs.BotSpecs
 			_bot.MakeMove(_game);
 
         private It should_block_fork = () =>
-			_game.AssertWasCalled(game => game.PlayMove(2, 2, _bot));
+			_game.AssertWasCalled(game => game.PlayMove(2, 1, _bot));
     }
 
 	[Subject("Bot fork strategy")]
-	public class when_blocking_opponents_diagonal_fork : ForkStrategySpecs
+	public class when_blocking_opponents_center_fork : ForkStrategySpecs
 	{
 		private Establish context = () =>
 		{
