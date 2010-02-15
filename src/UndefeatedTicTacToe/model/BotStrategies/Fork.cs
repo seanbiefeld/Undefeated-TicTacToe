@@ -13,8 +13,8 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 			Coordinate greatestOpponentCoord = opponentMoves.OrderByDescending(move => move.XValue).First();
 
 			IEnumerable<Coordinate> movesToMake = possibleNextMoves.Where(move => move.XValue >= greatestOpponentCoord.XValue);
-			IEnumerable<Coordinate> sides = movesToMake.Where(move => (move.XValue % 2 == 1) || (move.YValue % 2 == 1));
-			IEnumerable<Coordinate> corners = movesToMake.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0));
+			IEnumerable<Coordinate> sides = movesToMake.Where(move => (move.XValue % 2 == 1) || (move.YValue % 2 == 1)).OrderByDescending(move=>move.XValue);
+			IEnumerable<Coordinate> corners = movesToMake.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0)).OrderByDescending(move => move.XValue);
 
 			if (opponentMoves.Where(move => move.XValue == 1 && move.YValue == 1).Any())
 			{
@@ -35,7 +35,11 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 
 			if(movesToMake.Any())
 			{
-				coordinate = movesToMake.First();
+				coordinate =
+					possibleNextMoves
+						.Where(move => (move.XValue%2 == 0) || (move.YValue%2 == 0))
+						.OrderBy(move => move.XValue)
+						.First();
 				return true;
 			}
 
