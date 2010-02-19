@@ -11,9 +11,11 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 			coordinate = null;
 
 			IEnumerable<Coordinate> cornerMoves = possibleNextMoves.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0));
+			IEnumerable<Coordinate> opponentCornerMoves = opponentMoves.Where(move => (move.XValue % 2 == 0) && (move.YValue % 2 == 0));
 			IEnumerable<Coordinate> opponentSideMoves = opponentMoves.Where(move => (move.XValue%2 == 1) || (move.YValue%2 == 1));
+			IEnumerable<Coordinate> openSideMoves = possibleNextMoves.Where(move => (move.XValue % 2 == 1) || (move.YValue % 2 == 1));
 
-			//try to find corners on same y axis
+			//try to find corners on same y axis to block corner side fork
 			foreach (Coordinate opponentSideMove in opponentSideMoves)
 			{
 				foreach (Coordinate cornerMove in cornerMoves)
@@ -26,7 +28,7 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 				}
 			}
 
-			//try to find corners on same x axis
+			//try to find corners on same x axis to block corner side fork
 			foreach (Coordinate opponentSideMove in opponentSideMoves)
 			{
 				foreach (Coordinate cornerMove in cornerMoves)
@@ -38,6 +40,17 @@ namespace UndefeatedTicTacToe.model.BotStrategies
 					}
 				}
 			}
+
+			//if opponent forks the corners play a side and force the block
+			if(opponentCornerMoves.Count() == 2)
+			{
+				if(openSideMoves.Any())
+				{
+					coordinate = openSideMoves.First();
+					return true;
+				}
+			}
+			
 
 			return false;
 		}
